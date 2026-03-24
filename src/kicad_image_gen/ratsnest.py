@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import math
 import re
+from dataclasses import dataclass
 from pathlib import Path
 
 # Power/ground nets excluded from ratsnest
@@ -46,7 +47,8 @@ _RE_FOOTPRINT_AT = re.compile(
 )
 
 _RE_AT = re.compile(r"\(at\s+([-\d.]+)\s+([-\d.]+)(?:\s+([-\d.]+))?\)")
-_RE_NET = re.compile(r'\(net\s+\d+\s+"([^"]*?)"\)')
+# Matches both KiCad 9 format: (net 1 "GND") and KiCad 10 format: (net "GND")
+_RE_NET = re.compile(r'\(net\s+(?:\d+\s+)?"([^"]*?)"\)')
 
 
 def _rotate_point(px: float, py: float, angle_deg: float) -> tuple[float, float]:
@@ -56,27 +58,23 @@ def _rotate_point(px: float, py: float, angle_deg: float) -> tuple[float, float]
     return px * cos_a - py * sin_a, px * sin_a + py * cos_a
 
 
-def parse_net_pad_map(pcb_path: str | Path) -> dict[str, list[tuple[float, float]]]:
-    """Parse a .kicad_pcb file and build net → absolute pad positions map.
+_RE_PAD_NUM = re.compile(r'\(pad\s+"([^"]*)"')
+_RE_REF = re.compile(r'\(property\s+"Reference"\s+"([^"]*)"')
 
-    Extracts footprint positions and pad positions/nets using regex,
-    computes absolute pad coordinates accounting for footprint rotation.
-    Filters out power/ground nets and unnamed nets.
-    """
+
+def _parse_footprint_blocks(
+    pcb_path: str | Path,
+) -> list[tuple[float, float, float, str, str]]:
+    """Parse footprint blocks, yielding (fp_x, fp_y, fp_rot, block_text, refdes)."""
     text = Path(pcb_path).read_text(encoding="utf-8")
-    net_pads: dict[str, list[tuple[float, float]]] = {}
-
-    # Split into footprint blocks
-    # Find each "(footprint" and its matching close
     fp_starts = [m.start() for m in re.finditer(r"^\s+\(footprint\s", text, re.MULTILINE)]
+    results = []
 
     for i, start in enumerate(fp_starts):
-        # Find the extent of this footprint block
         end = fp_starts[i + 1] if i + 1 < len(fp_starts) else len(text)
         block = text[start:end]
 
-        # Extract footprint position
-        at_match = _RE_AT.search(block[:500])  # Position is near the top
+        at_match = _RE_AT.search(block[:500])
         if not at_match:
             continue
 
@@ -84,13 +82,27 @@ def parse_net_pad_map(pcb_path: str | Path) -> dict[str, list[tuple[float, float
         fp_y = float(at_match.group(2))
         fp_rot = float(at_match.group(3)) if at_match.group(3) else 0.0
 
-        # Find all pads in this footprint
+        ref_match = _RE_REF.search(block[:2000])
+        refdes = ref_match.group(1) if ref_match else ""
+
+        results.append((fp_x, fp_y, fp_rot, block, refdes))
+    return results
+
+
+def parse_net_pad_map(pcb_path: str | Path) -> dict[str, list[tuple[float, float]]]:
+    """Parse a .kicad_pcb file and build net → absolute pad positions map.
+
+    Extracts footprint positions and pad positions/nets using regex,
+    computes absolute pad coordinates accounting for footprint rotation.
+    Filters out power/ground nets and unnamed nets.
+    """
+    net_pads: dict[str, list[tuple[float, float]]] = {}
+
+    for fp_x, fp_y, fp_rot, block, _refdes in _parse_footprint_blocks(pcb_path):
         pad_starts = [m.start() for m in re.finditer(r"\(pad\s", block)]
         for ps in pad_starts:
-            # Extract a reasonable chunk for the pad definition
             pad_block = block[ps : ps + 500]
 
-            # Get net name
             net_match = _RE_NET.search(pad_block)
             if not net_match:
                 continue
@@ -98,21 +110,73 @@ def parse_net_pad_map(pcb_path: str | Path) -> dict[str, list[tuple[float, float
             if not net_name or net_name.upper() in POWER_NETS or net_name in POWER_NETS:
                 continue
 
-            # Get pad position (relative to footprint)
             pad_at = _RE_AT.search(pad_block)
             if not pad_at:
                 continue
 
             pad_x = float(pad_at.group(1))
             pad_y = float(pad_at.group(2))
-
-            # Compute absolute position
             rx, ry = _rotate_point(pad_x, pad_y, fp_rot)
             abs_x, abs_y = fp_x + rx, fp_y + ry
-
             net_pads.setdefault(net_name, []).append((abs_x, abs_y))
 
     return net_pads
+
+
+@dataclass(frozen=True)
+class PadLabel:
+    """A pad with its absolute position, net name, pad number, and component refdes."""
+
+    x: float
+    y: float
+    net_name: str
+    pad_number: str
+    refdes: str
+
+    @property
+    def label(self) -> str:
+        """Short label: net name (or pad number if no net)."""
+        return self.net_name or self.pad_number
+
+
+def parse_pad_labels(pcb_path: str | Path) -> list[PadLabel]:
+    """Parse all pads from a .kicad_pcb file with positions and labels.
+
+    Returns every pad (including power nets) with its absolute position,
+    net name, pad number, and parent component reference designator.
+    """
+    labels: list[PadLabel] = []
+
+    for fp_x, fp_y, fp_rot, block, refdes in _parse_footprint_blocks(pcb_path):
+        pad_starts = [m.start() for m in re.finditer(r"\(pad\s", block)]
+        for ps in pad_starts:
+            pad_block = block[ps : ps + 500]
+
+            pad_num_match = _RE_PAD_NUM.search(pad_block)
+            pad_number = pad_num_match.group(1) if pad_num_match else ""
+
+            net_match = _RE_NET.search(pad_block)
+            net_name = net_match.group(1) if net_match else ""
+
+            pad_at = _RE_AT.search(pad_block)
+            if not pad_at:
+                continue
+
+            pad_x = float(pad_at.group(1))
+            pad_y = float(pad_at.group(2))
+            rx, ry = _rotate_point(pad_x, pad_y, fp_rot)
+
+            labels.append(
+                PadLabel(
+                    x=fp_x + rx,
+                    y=fp_y + ry,
+                    net_name=net_name,
+                    pad_number=pad_number,
+                    refdes=refdes,
+                )
+            )
+
+    return labels
 
 
 def minimum_spanning_tree(
