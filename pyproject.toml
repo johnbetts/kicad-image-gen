@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kicad-image-gen"
+version = "0.1.0"
+description = "Generate PNG screenshots of KiCad PCBs — 2D editor view and 3D renders"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-xdist"]
+
+[project.scripts]
+kicad-image-gen = "kicad_image_gen.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/kicad_image_gen"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 99
