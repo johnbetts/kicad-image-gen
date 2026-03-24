@@ -89,12 +89,16 @@ def _parse_footprint_blocks(
     return results
 
 
-def parse_net_pad_map(pcb_path: str | Path) -> dict[str, list[tuple[float, float]]]:
+def parse_net_pad_map(
+    pcb_path: str | Path,
+    *,
+    include_power: bool = False,
+) -> dict[str, list[tuple[float, float]]]:
     """Parse a .kicad_pcb file and build net → absolute pad positions map.
 
-    Extracts footprint positions and pad positions/nets using regex,
-    computes absolute pad coordinates accounting for footprint rotation.
-    Filters out power/ground nets and unnamed nets.
+    Args:
+        pcb_path: Path to .kicad_pcb file.
+        include_power: If True, include power/ground nets. Default False.
     """
     net_pads: dict[str, list[tuple[float, float]]] = {}
 
@@ -107,7 +111,9 @@ def parse_net_pad_map(pcb_path: str | Path) -> dict[str, list[tuple[float, float
             if not net_match:
                 continue
             net_name = net_match.group(1)
-            if not net_name or net_name.upper() in POWER_NETS or net_name in POWER_NETS:
+            if not net_name:
+                continue
+            if not include_power and (net_name.upper() in POWER_NETS or net_name in POWER_NETS):
                 continue
 
             pad_at = _RE_AT.search(pad_block)

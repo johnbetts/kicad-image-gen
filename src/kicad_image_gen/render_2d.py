@@ -15,15 +15,15 @@ from kicad_image_gen.ratsnest import minimum_spanning_tree, parse_net_pad_map, p
 
 logger = logging.getLogger(__name__)
 
-_DEFAULT_LAYERS_TOP = "F.Cu,B.Cu,F.SilkS,B.SilkS,F.Mask,B.Mask,F.Fab,Edge.Cuts"
-_DEFAULT_LAYERS_BOTTOM = "B.Cu,B.SilkS,B.Mask,B.Fab,Edge.Cuts"
+_DEFAULT_LAYERS_TOP = "F.Cu,B.Cu,F.SilkS,B.SilkS,F.Mask,B.Mask,F.Fab,B.Fab,F.CrtYd,Edge.Cuts"
+_DEFAULT_LAYERS_BOTTOM = "B.Cu,B.SilkS,B.Mask,B.Fab,F.Fab,B.CrtYd,Edge.Cuts"
 _DEFAULT_WIDTH = 4800
 
 # Layer presets for convenience
 LAYER_PRESETS: dict[str, str] = {
     "all": "F.Cu,B.Cu,F.SilkS,B.SilkS,F.Mask,B.Mask,F.Fab,B.Fab,F.CrtYd,B.CrtYd,Edge.Cuts",
-    "top": "F.Cu,F.SilkS,F.Mask,F.Fab,Edge.Cuts",
-    "bottom": "B.Cu,B.SilkS,B.Mask,B.Fab,Edge.Cuts",
+    "top": "F.Cu,F.SilkS,F.Mask,F.Fab,F.CrtYd,Edge.Cuts",
+    "bottom": "B.Cu,B.SilkS,B.Mask,B.Fab,B.CrtYd,Edge.Cuts",
     "copper": "F.Cu,B.Cu,Edge.Cuts",
     "silkscreen": "F.SilkS,B.SilkS,Edge.Cuts",
     "fab": "F.Fab,B.Fab,F.CrtYd,B.CrtYd,Edge.Cuts",
@@ -131,12 +131,13 @@ def _export_svg(
             "--exclude-drawing-sheet",
             "--page-size-mode",
             "2",
+            "--sketch-pads-on-fab-layers",
             "-o",
             str(svg_out),
         ]
 
-        if theme:
-            cmd.extend(["--theme", theme])
+        # Default to user's KiCad theme for editor-matching colors
+        cmd.extend(["--theme", theme or "user"])
         if mirror:
             cmd.append("--mirror")
         if black_and_white:
@@ -250,13 +251,17 @@ def _convert_sips(svg_path: Path, output_path: Path, width: int) -> Path | None:
 # ---------------------------------------------------------------------------
 
 _SVG_NS = "http://www.w3.org/2000/svg"
-_RATSNEST_COLOR = "#44ee44"
-_RATSNEST_OPACITY = "0.55"
-_RATSNEST_STROKE_WIDTH = "0.25"
-_LABEL_FONT_SIZE = "0.6"
-_LABEL_COLOR = "#ffffff"
-_LABEL_BG_COLOR = "#000000"
-_LABEL_BG_OPACITY = "0.65"
+
+# Ratsnest: slightly more visible than KiCad's thin gray, but not overwhelming
+_RATSNEST_COLOR = "#88aacc"
+_RATSNEST_OPACITY = "0.40"
+_RATSNEST_STROKE_WIDTH = "0.15"
+
+# Pad labels: pin number inside pad (cyan), net name offset (smaller, yellow)
+_PAD_NUM_FONT_SIZE = "0.9"
+_PAD_NUM_COLOR = "#00dddd"
+_NET_NAME_FONT_SIZE = "0.5"
+_NET_NAME_COLOR = "#ccaa44"
 
 
 def _inject_overlays(
@@ -282,9 +287,9 @@ def _inject_overlays(
 
     modified = False
 
-    # --- Ratsnest lines ---
+    # --- Ratsnest lines (all nets, including power) ---
     if ratsnest:
-        net_pads = parse_net_pad_map(pcb_path)
+        net_pads = parse_net_pad_map(pcb_path, include_power=True)
         if net_pads:
             ratsnest_group = ET.SubElement(root, f"{{{_SVG_NS}}}g")
             ratsnest_group.set("id", "ratsnest")
@@ -309,40 +314,38 @@ def _inject_overlays(
                 modified = True
                 logger.info("Injected %d ratsnest lines into SVG", line_count)
 
-    # --- Pad labels ---
+    # --- Pad labels: pin number (centered on pad) + net name (offset) ---
     if pad_labels:
         all_pads = parse_pad_labels(pcb_path)
         if all_pads:
             labels_group = ET.SubElement(root, f"{{{_SVG_NS}}}g")
             labels_group.set("id", "pad-labels")
 
-            font_size = float(_LABEL_FONT_SIZE)
             label_count = 0
             for pad in all_pads:
-                text_str = pad.label
-                if not text_str:
-                    continue
+                # Pin number — centered on pad, cyan, like KiCad editor
+                if pad.pad_number:
+                    num_el = ET.SubElement(labels_group, f"{{{_SVG_NS}}}text")
+                    num_el.set("x", f"{pad.x:.4f}")
+                    num_el.set("y", f"{pad.y + 0.25:.4f}")
+                    num_el.set("font-size", _PAD_NUM_FONT_SIZE)
+                    num_el.set("font-family", "sans-serif")
+                    num_el.set("font-weight", "bold")
+                    num_el.set("fill", _PAD_NUM_COLOR)
+                    num_el.set("text-anchor", "middle")
+                    num_el.text = pad.pad_number
+                    label_count += 1
 
-                # Background rectangle for readability
-                text_width = len(text_str) * font_size * 0.55
-                rect = ET.SubElement(labels_group, f"{{{_SVG_NS}}}rect")
-                rect.set("x", f"{pad.x + 0.3:.4f}")
-                rect.set("y", f"{pad.y - font_size * 0.8:.4f}")
-                rect.set("width", f"{text_width:.4f}")
-                rect.set("height", f"{font_size * 1.1:.4f}")
-                rect.set("fill", _LABEL_BG_COLOR)
-                rect.set("opacity", _LABEL_BG_OPACITY)
-                rect.set("rx", "0.15")
-
-                # Text label
-                text_el = ET.SubElement(labels_group, f"{{{_SVG_NS}}}text")
-                text_el.set("x", f"{pad.x + 0.4:.4f}")
-                text_el.set("y", f"{pad.y:.4f}")
-                text_el.set("font-size", _LABEL_FONT_SIZE)
-                text_el.set("font-family", "monospace")
-                text_el.set("fill", _LABEL_COLOR)
-                text_el.text = text_str
-                label_count += 1
+                # Net name — offset below-right, smaller, yellow
+                if pad.net_name:
+                    net_el = ET.SubElement(labels_group, f"{{{_SVG_NS}}}text")
+                    net_el.set("x", f"{pad.x + 0.8:.4f}")
+                    net_el.set("y", f"{pad.y + 0.9:.4f}")
+                    net_el.set("font-size", _NET_NAME_FONT_SIZE)
+                    net_el.set("font-family", "sans-serif")
+                    net_el.set("fill", _NET_NAME_COLOR)
+                    net_el.text = pad.net_name
+                    label_count += 1
 
             if label_count > 0:
                 modified = True
