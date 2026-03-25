@@ -13,6 +13,7 @@ from pathlib import Path
 from kicad_image_gen.core import find_kicad_cli
 from kicad_image_gen.ratsnest import (
     minimum_spanning_tree,
+    parse_board_bounds,
     parse_mounting_holes,
     parse_net_pad_map,
     parse_pad_labels,
@@ -22,7 +23,7 @@ from kicad_image_gen.ratsnest import (
 logger = logging.getLogger(__name__)
 
 # Layer order matters: later layers render on top. F.Cu last so pads show as red.
-_DEFAULT_LAYERS_TOP = "B.SilkS,B.Mask,B.Fab,F.Mask,F.Fab,F.Paste,Edge.Cuts,F.Cu,F.SilkS"
+_DEFAULT_LAYERS_TOP = "F.Mask,F.Fab,Edge.Cuts,F.Cu,F.SilkS"
 _DEFAULT_LAYERS_BOTTOM = "F.Cu,F.SilkS,F.Mask,F.Fab,B.Mask,B.Fab,B.CrtYd,Edge.Cuts,B.Cu,B.SilkS"
 _DEFAULT_WIDTH = 4800
 
@@ -49,6 +50,7 @@ def render_2d(
     black_and_white: bool = False,
     ratsnest: bool = True,
     pad_labels: bool = False,
+    grid_dots: bool = False,
 ) -> Path:
     """Export a 2D editor-style PNG image of a KiCad PCB.
 
@@ -66,6 +68,7 @@ def render_2d(
         black_and_white: Render in black and white.
         ratsnest: Inject ratsnest lines showing signal-net connectivity (default True).
         pad_labels: Inject pad net-name labels at each pad location (default True).
+        grid_dots: Inject subtle grid dot pattern in background (default True).
 
     Returns:
         Resolved output path.
@@ -94,7 +97,7 @@ def render_2d(
         raise RuntimeError(msg)
 
     # Step 2: Inject overlays into SVG (always runs for background/grid)
-    _inject_overlays(svg_path, pcb_path, ratsnest=ratsnest, pad_labels=pad_labels)
+    _inject_overlays(svg_path, pcb_path, ratsnest=ratsnest, pad_labels=pad_labels, grid_dots=grid_dots)
 
     # Step 3: Convert SVG → PNG
     try:
@@ -261,6 +264,9 @@ _SVG_NS = "http://www.w3.org/2000/svg"
 # KiCad editor dark navy background color
 _BG_COLOR = "#001023"
 
+# Board substrate fill (inside Edge.Cuts, behind all other layers)
+_BOARD_FILL_COLOR = "#232d3a"
+
 # Mounting holes: bright cyan like KiCad editor
 _MOUNTING_HOLE_COLOR = "#1ac4d2"
 
@@ -269,14 +275,23 @@ _DRILL_HOLE_COLOR = "#001023"
 
 # Ratsnest: slightly more visible than KiCad's thin gray, but not overwhelming
 _RATSNEST_COLOR = "#557799"
-_RATSNEST_OPACITY = "0.22"
-_RATSNEST_STROKE_WIDTH = "0.10"
+_RATSNEST_OPACITY = "0.02"
+_RATSNEST_STROKE_WIDTH = "0.08"
 
-# Pad labels: pin number inside pad (cyan), net name offset (smaller, yellow)
-_PAD_NUM_FONT_SIZE = "0.75"
+# Pad labels: pin number inside pad (cyan), net name offset (smaller, muted)
 _PAD_NUM_COLOR = "#00cccc"
-_NET_NAME_FONT_SIZE = "0.40"
+_PAD_NUM_SIZE_FACTOR = 0.55  # font size = min(pad_w, pad_h) * factor
+_PAD_NUM_MIN_FONT = 0.25
+_PAD_NUM_MAX_FONT = 1.5
+_NET_NAME_SIZE_FACTOR = 0.30
+_NET_NAME_MIN_FONT = 0.18
+_NET_NAME_MAX_FONT = 0.60
 _NET_NAME_COLOR = "#9988aa"
+
+# Grid dots
+_GRID_DOT_COLOR = "#1a2a3a"
+_GRID_DOT_RADIUS = 0.04  # mm
+_GRID_SPACING = 1.27  # mm (50mil grid, matching KiCad default)
 
 
 def _inject_overlays(
@@ -285,6 +300,7 @@ def _inject_overlays(
     *,
     ratsnest: bool = True,
     pad_labels: bool = True,
+    grid_dots: bool = True,
 ) -> None:
     """Inject ratsnest lines and/or pad labels into the exported SVG."""
     ET.register_namespace("", _SVG_NS)
@@ -307,9 +323,9 @@ def _inject_overlays(
     if len(vb_parts) == 4:
         vb_x, vb_y = float(vb_parts[0]), float(vb_parts[1])
         vb_w, vb_h = float(vb_parts[2]), float(vb_parts[3])
-        # Add 5% padding on each side
-        pad_x = vb_w * 0.03
-        pad_y = vb_h * 0.03
+        # Add padding on each side
+        pad_x = vb_w * 0.04
+        pad_y = vb_h * 0.04
         new_x = vb_x - pad_x
         new_y = vb_y - pad_y
         new_w = vb_w + 2 * pad_x
@@ -325,6 +341,42 @@ def _inject_overlays(
         bg_rect.set("fill", _BG_COLOR)
         root.insert(0, bg_rect)
 
+        # Board substrate fill (lighter than background, inside Edge.Cuts)
+        try:
+            bx0, by0, bx1, by1 = parse_board_bounds(pcb_path)
+            board_rect = ET.SubElement(root, f"{{{_SVG_NS}}}rect")
+            board_rect.set("x", f"{bx0:.4f}")
+            board_rect.set("y", f"{by0:.4f}")
+            board_rect.set("width", f"{bx1 - bx0:.4f}")
+            board_rect.set("height", f"{by1 - by0:.4f}")
+            board_rect.set("fill", _BOARD_FILL_COLOR)
+            # Insert after background but before everything else
+            # Move board rect right after bg_rect (index 1)
+            root.remove(board_rect)
+            root.insert(1, board_rect)
+        except (ValueError, OSError):
+            pass  # No Edge.Cuts found, skip board fill
+
+        # Grid dot pattern (1mm spacing)
+        if grid_dots:
+            defs = ET.SubElement(root, f"{{{_SVG_NS}}}defs")
+            pattern = ET.SubElement(defs, f"{{{_SVG_NS}}}pattern")
+            pattern.set("id", "grid-dots")
+            pattern.set("width", f"{_GRID_SPACING}")
+            pattern.set("height", f"{_GRID_SPACING}")
+            pattern.set("patternUnits", "userSpaceOnUse")
+            dot = ET.SubElement(pattern, f"{{{_SVG_NS}}}circle")
+            dot.set("cx", f"{_GRID_SPACING / 2:.4f}")
+            dot.set("cy", f"{_GRID_SPACING / 2:.4f}")
+            dot.set("r", f"{_GRID_DOT_RADIUS}")
+            dot.set("fill", _GRID_DOT_COLOR)
+            grid_rect = ET.SubElement(root, f"{{{_SVG_NS}}}rect")
+            grid_rect.set("x", f"{new_x:.4f}")
+            grid_rect.set("y", f"{new_y:.4f}")
+            grid_rect.set("width", f"{new_w:.4f}")
+            grid_rect.set("height", f"{new_h:.4f}")
+            grid_rect.set("fill", "url(#grid-dots)")
+
         modified = True
 
     # --- Mounting holes (cyan filled circles, on top of everything) ---
@@ -336,7 +388,7 @@ def _inject_overlays(
             circle = ET.SubElement(mh_group, f"{{{_SVG_NS}}}circle")
             circle.set("cx", f"{hole.x:.4f}")
             circle.set("cy", f"{hole.y:.4f}")
-            circle.set("r", f"{hole.diameter / 2 * 1.45:.4f}")
+            circle.set("r", f"{hole.diameter / 2 * 1.25:.4f}")
             circle.set("fill", _MOUNTING_HOLE_COLOR)
         modified = True
         logger.info("Injected %d mounting hole circles", len(mounting_holes))
@@ -371,7 +423,7 @@ def _inject_overlays(
                 modified = True
                 logger.info("Injected %d ratsnest lines into SVG", line_count)
 
-    # --- Pad labels: pin number (centered on pad) + net name (offset) ---
+    # --- Pad labels: pin number (sized to pad, centered) + net name (offset) ---
     if pad_labels:
         all_pads = parse_pad_labels(pcb_path)
         if all_pads:
@@ -380,12 +432,20 @@ def _inject_overlays(
 
             label_count = 0
             for pad in all_pads:
-                # Pin number — centered on pad, cyan, like KiCad editor
+                pad_min = min(pad.pad_width, pad.pad_height)
+
+                # Pin number — sized proportional to pad, centered
                 if pad.pad_number:
+                    num_font = max(
+                        _PAD_NUM_MIN_FONT,
+                        min(_PAD_NUM_MAX_FONT, pad_min * _PAD_NUM_SIZE_FACTOR),
+                    )
+                    # Vertical centering: shift down by ~0.35 * font_size
+                    y_offset = num_font * 0.35
                     num_el = ET.SubElement(labels_group, f"{{{_SVG_NS}}}text")
                     num_el.set("x", f"{pad.x:.4f}")
-                    num_el.set("y", f"{pad.y + 0.25:.4f}")
-                    num_el.set("font-size", _PAD_NUM_FONT_SIZE)
+                    num_el.set("y", f"{pad.y + y_offset:.4f}")
+                    num_el.set("font-size", f"{num_font:.3f}")
                     num_el.set("font-family", "sans-serif")
                     num_el.set("font-weight", "bold")
                     num_el.set("fill", _PAD_NUM_COLOR)
@@ -393,14 +453,20 @@ def _inject_overlays(
                     num_el.text = pad.pad_number
                     label_count += 1
 
-                # Net name — offset below-right, smaller, yellow
+                # Net name — offset below pad, smaller, muted
                 if pad.net_name:
+                    net_font = max(
+                        _NET_NAME_MIN_FONT,
+                        min(_NET_NAME_MAX_FONT, pad_min * _NET_NAME_SIZE_FACTOR),
+                    )
+                    net_y_offset = pad.pad_height / 2 + net_font * 1.2
                     net_el = ET.SubElement(labels_group, f"{{{_SVG_NS}}}text")
-                    net_el.set("x", f"{pad.x + 0.8:.4f}")
-                    net_el.set("y", f"{pad.y + 0.9:.4f}")
-                    net_el.set("font-size", _NET_NAME_FONT_SIZE)
+                    net_el.set("x", f"{pad.x:.4f}")
+                    net_el.set("y", f"{pad.y + net_y_offset:.4f}")
+                    net_el.set("font-size", f"{net_font:.3f}")
                     net_el.set("font-family", "sans-serif")
                     net_el.set("fill", _NET_NAME_COLOR)
+                    net_el.set("text-anchor", "middle")
                     net_el.text = pad.net_name
                     label_count += 1
 

@@ -84,8 +84,15 @@ def parse_board_bounds(pcb_path: str | Path) -> tuple[float, float, float, float
 
     coord_re = re.compile(r"\((start|end|mid)\s+([-\d.]+)\s+([-\d.]+)\)")
 
-    # Find all top-level gr_line, gr_rect, gr_arc, gr_poly blocks
-    for m in re.finditer(r"^\t\(gr_(?:line|rect|arc|poly)\b", text, re.MULTILINE):
+    # First try top-level (gr_*), then fall back to footprint (fp_*) if needed
+    pattern = r"\(gr_(?:line|rect|arc|poly)\b"
+    matches = list(re.finditer(pattern, text))
+    if not matches:
+        # Fall back: also include fp_* (but note these coords may be relative)
+        pattern = r"\((?:gr_|fp_)(?:line|rect|arc|poly)\b"
+        matches = list(re.finditer(pattern, text))
+
+    for m in matches:
         block_start = m.start()
         # Find the closing paren by counting nesting
         depth = 0
@@ -192,6 +199,8 @@ class PadLabel:
     net_name: str
     pad_number: str
     refdes: str
+    pad_width: float = 1.0
+    pad_height: float = 1.0
 
     @property
     def label(self) -> str:
@@ -289,6 +298,10 @@ def parse_pad_labels(pcb_path: str | Path) -> list[PadLabel]:
             pad_y = float(pad_at.group(2))
             rx, ry = _rotate_point(pad_x, pad_y, fp_rot)
 
+            size_match = _RE_PAD_SIZE.search(pad_block)
+            pw = float(size_match.group(1)) if size_match else 1.0
+            ph = float(size_match.group(2)) if size_match else 1.0
+
             labels.append(
                 PadLabel(
                     x=fp_x + rx,
@@ -296,6 +309,8 @@ def parse_pad_labels(pcb_path: str | Path) -> list[PadLabel]:
                     net_name=net_name,
                     pad_number=pad_number,
                     refdes=refdes,
+                    pad_width=pw,
+                    pad_height=ph,
                 )
             )
 
