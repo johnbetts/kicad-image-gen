@@ -268,9 +268,9 @@ _MOUNTING_HOLE_COLOR = "#1ac4d2"
 _DRILL_HOLE_COLOR = "#001023"
 
 # Ratsnest: slightly more visible than KiCad's thin gray, but not overwhelming
-_RATSNEST_COLOR = "#6688aa"
-_RATSNEST_OPACITY = "0.30"
-_RATSNEST_STROKE_WIDTH = "0.12"
+_RATSNEST_COLOR = "#557799"
+_RATSNEST_OPACITY = "0.22"
+_RATSNEST_STROKE_WIDTH = "0.10"
 
 # Pad labels: pin number inside pad (cyan), net name offset (smaller, yellow)
 _PAD_NUM_FONT_SIZE = "0.75"
