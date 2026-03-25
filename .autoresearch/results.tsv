@@ -19,3 +19,63 @@ iteration	val_bpb	avg_mae	avg_bg	avg_hist	status	hypothesis
 18	1.0873	36.89	18.40	1.1630	NEUTRAL	Reduce width to 2400px (no effect due to resize)
 19	1.0697	36.50	18.40	1.1644	KEEP	Remove sketch-pads-on-fab-layers (big win on bright_ratio)
 20	1.1373	38.57	18.40	1.1668	DISCARD	Remove exclude-drawing-sheet (much worse)
+21	1.1160	DISCARD	Exclude power nets from ratsnest
+22	1.1267	DISCARD	F.Cu warmer red rgb(200,60,40)
+23	1.1278	DISCARD	drill-shape-opt 2 (small drill marks)
+24	1.2647	DISCARD	Lighter background #0a1525
+25	1.1162	DISCARD	drill-shape-opt 1 (actual size)
+26	1.1164	DISCARD	Disable ratsnest by default
+27	1.1155	DISCARD	Ratsnest opacity 0.15
+28	1.1156	DISCARD	Ratsnest stroke 0.06mm
+29	1.1148	NEUTRAL	Remove B.SilkS from default layers
+30	1.0991	KEEP	Remove F.CrtYd from default layers
+31	1.0991	NEUTRAL	Remove B.Mask from default layers (no change)
+32	1.0991	NEUTRAL	Remove F.Mask and B.Mask from default layers
+33	1.1079	DISCARD	Disable mounting hole overlay
+34	1.1035	KEEP	Disable THT drill hole overlay
+35	1.1005	KEEP	Mounting hole size 0.85x scale
+36	1.1009	DISCARD	Mounting hole size 0.70x scale
+37	1.1006	DISCARD	Mounting hole size 0.80x scale
+38	1.1017	DISCARD	Dimmer ratsnest color #3a5570
+39	1.0137	KEEP	Edge.Cuts yellow rgb(194,194,38)
+40	1.0289	DISCARD	Edge.Cuts pure yellow rgb(194,194,0)
+41	1.0245	DISCARD	Edge.Cuts rgb(200,200,50)
+42	1.0112	KEEP	F.Fab dimmer yellow rgb(220,215,140)
+43	1.0094	KEEP	F.SilkS dimmer yellow rgb(220,215,140)
+44	1.0094	NEUTRAL	B.Cu dimmer blue rgb(65,115,180)
+45	1.0094	NEUTRAL	page-size-mode 2 instead of fit-page-to-board
+46	2.2670	DISCARD	Add --check-zones flag (zone fills made image too bright)
+47	1.0129	DISCARD	F.Fab dimmer rgb(200,195,120)
+48	1.0094	NEUTRAL	B.Fab darker rgb(70,75,110)
+49	1.0094	NEUTRAL	pad_plated_hole darker yellow
+50	0.8164	KEEP	Add 5% viewBox padding for board margin (bg_error 14.54->1.00)
+51	0.7995	KEEP	3% viewBox padding (tighter margin)
+52	0.8134	DISCARD	2% viewBox padding (too tight)
+53	0.8020	DISCARD	4% viewBox padding
+54	0.7994	KEEP	Remove B.Cu from default layers
+55	0.7994	NEUTRAL	Remove B.SilkS from default layers
+56	0.8058	DISCARD	F.Cu slightly orange rgb(200,55,45)
+57	0.7996	DISCARD	subtract-soldermask flag
+58	0.7994	NEUTRAL	Remove B.Fab from default layers
+59	0.8018	DISCARD	Mounting hole color #20c0c8
+60	0.7994	NEUTRAL	Width 2400 (no change)
+61	0.8001	DISCARD	Grid dots 1mm #232d3a
+62	0.7994	NEUTRAL	edge_cuts rgb(190,190,40)
+63	0.7994	NEUTRAL	3.5% viewBox padding
+64	0.8122	DISCARD	F.Cu dimmer rgb(185,48,48)
+65	0.8256	DISCARD	Remove F.Fab from default layers
+66	0.7975	KEEP	Mounting hole 0.90x scale
+67	0.7956	KEEP	Mounting hole 0.95x scale
+68	0.7940	KEEP	Mounting hole 1.0x (no scale)
+69	0.7924	KEEP	Mounting hole 1.05x scale
+70	0.7910	KEEP	Mounting hole 1.10x scale
+71	0.7891	KEEP	Mounting hole 1.20x scale
+72	0.7883	KEEP	Mounting hole 1.30x scale
+73	0.7885	DISCARD	Mounting hole 1.50x scale
+74	0.7886	DISCARD	Ratsnest opacity 0.18
+75	0.7886	DISCARD	Ratsnest stroke 0.08
+76	0.7877	KEEP	Mounting hole 1.40x scale
+77	0.7876	KEEP	Mounting hole 1.45x scale
+78	0.7876	NEUTRAL	b_silks dimmer
+79	0.7873	KEEP	Add F.Paste to default layers
+80	0.7922	DISCARD	Re-add F.CrtYd (worse)

@@ -22,7 +22,7 @@ from kicad_image_gen.ratsnest import (
 logger = logging.getLogger(__name__)
 
 # Layer order matters: later layers render on top. F.Cu last so pads show as red.
-_DEFAULT_LAYERS_TOP = "B.Cu,B.SilkS,B.Mask,B.Fab,F.Mask,F.Fab,F.CrtYd,Edge.Cuts,F.Cu,F.SilkS"
+_DEFAULT_LAYERS_TOP = "B.SilkS,B.Mask,B.Fab,F.Mask,F.Fab,F.Paste,Edge.Cuts,F.Cu,F.SilkS"
 _DEFAULT_LAYERS_BOTTOM = "F.Cu,F.SilkS,F.Mask,F.Fab,B.Mask,B.Fab,B.CrtYd,Edge.Cuts,B.Cu,B.SilkS"
 _DEFAULT_WIDTH = 4800
 
@@ -302,15 +302,26 @@ def _inject_overlays(
 
     modified = False
 
-    # --- Background rect + grid (KiCad dark navy with dot grid) ---
+    # --- Expand viewBox for margin, then add background fill ---
     vb_parts = viewbox.split()
     if len(vb_parts) == 4:
-        # Background fill
+        vb_x, vb_y = float(vb_parts[0]), float(vb_parts[1])
+        vb_w, vb_h = float(vb_parts[2]), float(vb_parts[3])
+        # Add 5% padding on each side
+        pad_x = vb_w * 0.03
+        pad_y = vb_h * 0.03
+        new_x = vb_x - pad_x
+        new_y = vb_y - pad_y
+        new_w = vb_w + 2 * pad_x
+        new_h = vb_h + 2 * pad_y
+        root.set("viewBox", f"{new_x:.4f} {new_y:.4f} {new_w:.4f} {new_h:.4f}")
+
+        # Background fill covering expanded area
         bg_rect = ET.Element(f"{{{_SVG_NS}}}rect")
-        bg_rect.set("x", vb_parts[0])
-        bg_rect.set("y", vb_parts[1])
-        bg_rect.set("width", vb_parts[2])
-        bg_rect.set("height", vb_parts[3])
+        bg_rect.set("x", f"{new_x:.4f}")
+        bg_rect.set("y", f"{new_y:.4f}")
+        bg_rect.set("width", f"{new_w:.4f}")
+        bg_rect.set("height", f"{new_h:.4f}")
         bg_rect.set("fill", _BG_COLOR)
         root.insert(0, bg_rect)
 
@@ -325,24 +336,13 @@ def _inject_overlays(
             circle = ET.SubElement(mh_group, f"{{{_SVG_NS}}}circle")
             circle.set("cx", f"{hole.x:.4f}")
             circle.set("cy", f"{hole.y:.4f}")
-            circle.set("r", f"{hole.diameter / 2:.4f}")
+            circle.set("r", f"{hole.diameter / 2 * 1.45:.4f}")
             circle.set("fill", _MOUNTING_HOLE_COLOR)
         modified = True
         logger.info("Injected %d mounting hole circles", len(mounting_holes))
 
-    # --- THT drill holes (dark dot in center of through-hole pads) ---
-    tht_pads = parse_tht_pads(pcb_path)
-    if tht_pads:
-        drill_group = ET.SubElement(root, f"{{{_SVG_NS}}}g")
-        drill_group.set("id", "drill-holes")
-        for pad in tht_pads:
-            circle = ET.SubElement(drill_group, f"{{{_SVG_NS}}}circle")
-            circle.set("cx", f"{pad.x:.4f}")
-            circle.set("cy", f"{pad.y:.4f}")
-            circle.set("r", f"{pad.drill / 2:.4f}")
-            circle.set("fill", _DRILL_HOLE_COLOR)
-        modified = True
-        logger.info("Injected %d THT drill holes", len(tht_pads))
+    # --- THT drill holes (disabled — theme handles via_hole color) ---
+    # tht_pads = parse_tht_pads(pcb_path)
 
     # --- Ratsnest lines (all nets, including power) ---
     if ratsnest:
