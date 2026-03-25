@@ -15,18 +15,19 @@ from kicad_image_gen.ratsnest import minimum_spanning_tree, parse_net_pad_map, p
 
 logger = logging.getLogger(__name__)
 
-_DEFAULT_LAYERS_TOP = "F.Cu,B.Cu,F.SilkS,B.SilkS,F.Mask,B.Mask,F.Fab,B.Fab,F.CrtYd,Edge.Cuts"
-_DEFAULT_LAYERS_BOTTOM = "B.Cu,B.SilkS,B.Mask,B.Fab,F.Fab,B.CrtYd,Edge.Cuts"
+# Layer order matters: later layers render on top. F.Cu last so pads show as red.
+_DEFAULT_LAYERS_TOP = "B.Cu,B.SilkS,B.Mask,B.Fab,F.Mask,F.Fab,F.CrtYd,Edge.Cuts,F.Cu,F.SilkS"
+_DEFAULT_LAYERS_BOTTOM = "F.Cu,F.SilkS,F.Mask,F.Fab,B.Mask,B.Fab,B.CrtYd,Edge.Cuts,B.Cu,B.SilkS"
 _DEFAULT_WIDTH = 4800
 
-# Layer presets for convenience
+# Layer presets for convenience (ordered: back layers first, front on top)
 LAYER_PRESETS: dict[str, str] = {
-    "all": "F.Cu,B.Cu,F.SilkS,B.SilkS,F.Mask,B.Mask,F.Fab,B.Fab,F.CrtYd,B.CrtYd,Edge.Cuts",
-    "top": "F.Cu,F.SilkS,F.Mask,F.Fab,F.CrtYd,Edge.Cuts",
-    "bottom": "B.Cu,B.SilkS,B.Mask,B.Fab,B.CrtYd,Edge.Cuts",
-    "copper": "F.Cu,B.Cu,Edge.Cuts",
-    "silkscreen": "F.SilkS,B.SilkS,Edge.Cuts",
-    "fab": "F.Fab,B.Fab,F.CrtYd,B.CrtYd,Edge.Cuts",
+    "all": "B.Cu,B.SilkS,B.Mask,B.Fab,B.CrtYd,F.Mask,F.Fab,F.CrtYd,Edge.Cuts,F.Cu,F.SilkS",
+    "top": "F.Mask,F.Fab,F.CrtYd,Edge.Cuts,F.Cu,F.SilkS",
+    "bottom": "B.Mask,B.Fab,B.CrtYd,Edge.Cuts,B.Cu,B.SilkS",
+    "copper": "B.Cu,Edge.Cuts,F.Cu",
+    "silkscreen": "B.SilkS,Edge.Cuts,F.SilkS",
+    "fab": "B.Fab,B.CrtYd,Edge.Cuts,F.Fab,F.CrtYd",
 }
 
 
@@ -129,12 +130,14 @@ def _export_svg(
             layers,
             "--exclude-drawing-sheet",
             "--fit-page-to-board",
+            "--drill-shape-opt",
+            "0",
             "-o",
             str(svg_out),
         ]
 
-        # Default to KiCad Default theme; users can pass --theme kicad_image_gen for editor-matching
-        cmd.extend(["--theme", theme or "KiCad Default"])
+        # Default to custom theme for editor-matching pad colors
+        cmd.extend(["--theme", theme or "kicad_image_gen"])
         if mirror:
             cmd.append("--mirror")
         if black_and_white:
