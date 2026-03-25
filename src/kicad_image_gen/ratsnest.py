@@ -199,6 +199,69 @@ class PadLabel:
         return self.net_name or self.pad_number
 
 
+_RE_PAD_SIZE = re.compile(r"\(size\s+([-\d.]+)\s+([-\d.]+)\)")
+_RE_PAD_DRILL = re.compile(r"\(drill\s+([-\d.]+)")
+
+
+@dataclass(frozen=True)
+class MountingHole:
+    """A mounting hole with absolute position and size."""
+
+    x: float
+    y: float
+    diameter: float  # pad size in mm
+
+
+@dataclass(frozen=True)
+class THTpad:
+    """A through-hole pad with position, size, and drill."""
+
+    x: float
+    y: float
+    size: float  # pad diameter in mm
+    drill: float  # drill diameter in mm
+
+
+def parse_mounting_holes(pcb_path: str | Path) -> list[MountingHole]:
+    """Parse mounting hole (NPTH) pad positions from a .kicad_pcb file."""
+    holes: list[MountingHole] = []
+    for fp_x, fp_y, fp_rot, block, _refdes in _parse_footprint_blocks(pcb_path):
+        for m in re.finditer(r"\(pad\s", block):
+            pad_block = block[m.start() : m.start() + 500]
+            if "np_thru_hole" not in pad_block:
+                continue
+            pad_at = _RE_AT.search(pad_block)
+            if not pad_at:
+                continue
+            pad_x, pad_y = float(pad_at.group(1)), float(pad_at.group(2))
+            rx, ry = _rotate_point(pad_x, pad_y, fp_rot)
+            size_match = _RE_PAD_SIZE.search(pad_block)
+            diameter = float(size_match.group(1)) if size_match else 3.0
+            holes.append(MountingHole(x=fp_x + rx, y=fp_y + ry, diameter=diameter))
+    return holes
+
+
+def parse_tht_pads(pcb_path: str | Path) -> list[THTpad]:
+    """Parse through-hole (plated) pad positions with size and drill from a .kicad_pcb file."""
+    pads: list[THTpad] = []
+    for fp_x, fp_y, fp_rot, block, _refdes in _parse_footprint_blocks(pcb_path):
+        for m in re.finditer(r"\(pad\s", block):
+            pad_block = block[m.start() : m.start() + 500]
+            if "thru_hole" not in pad_block or "np_thru_hole" in pad_block:
+                continue
+            pad_at = _RE_AT.search(pad_block)
+            if not pad_at:
+                continue
+            pad_x, pad_y = float(pad_at.group(1)), float(pad_at.group(2))
+            rx, ry = _rotate_point(pad_x, pad_y, fp_rot)
+            size_match = _RE_PAD_SIZE.search(pad_block)
+            drill_match = _RE_PAD_DRILL.search(pad_block)
+            size = float(size_match.group(1)) if size_match else 1.5
+            drill = float(drill_match.group(1)) if drill_match else 0.8
+            pads.append(THTpad(x=fp_x + rx, y=fp_y + ry, size=size, drill=drill))
+    return pads
+
+
 def parse_pad_labels(pcb_path: str | Path) -> list[PadLabel]:
     """Parse all pads from a .kicad_pcb file with positions and labels.
 

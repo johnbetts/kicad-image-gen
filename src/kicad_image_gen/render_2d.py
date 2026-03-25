@@ -11,7 +11,13 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from kicad_image_gen.core import find_kicad_cli
-from kicad_image_gen.ratsnest import minimum_spanning_tree, parse_net_pad_map, parse_pad_labels
+from kicad_image_gen.ratsnest import (
+    minimum_spanning_tree,
+    parse_mounting_holes,
+    parse_net_pad_map,
+    parse_pad_labels,
+    parse_tht_pads,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -255,6 +261,12 @@ _SVG_NS = "http://www.w3.org/2000/svg"
 # KiCad editor dark navy background color
 _BG_COLOR = "#001023"
 
+# Mounting holes: bright cyan like KiCad editor
+_MOUNTING_HOLE_COLOR = "#1ac4d2"
+
+# THT drill holes: dark center dot
+_DRILL_HOLE_COLOR = "#001023"
+
 # Ratsnest: slightly more visible than KiCad's thin gray, but not overwhelming
 _RATSNEST_COLOR = "#6688aa"
 _RATSNEST_OPACITY = "0.30"
@@ -303,6 +315,34 @@ def _inject_overlays(
         root.insert(0, bg_rect)
 
         modified = True
+
+    # --- Mounting holes (cyan filled circles, on top of everything) ---
+    mounting_holes = parse_mounting_holes(pcb_path)
+    if mounting_holes:
+        mh_group = ET.SubElement(root, f"{{{_SVG_NS}}}g")
+        mh_group.set("id", "mounting-holes")
+        for hole in mounting_holes:
+            circle = ET.SubElement(mh_group, f"{{{_SVG_NS}}}circle")
+            circle.set("cx", f"{hole.x:.4f}")
+            circle.set("cy", f"{hole.y:.4f}")
+            circle.set("r", f"{hole.diameter / 2:.4f}")
+            circle.set("fill", _MOUNTING_HOLE_COLOR)
+        modified = True
+        logger.info("Injected %d mounting hole circles", len(mounting_holes))
+
+    # --- THT drill holes (dark dot in center of through-hole pads) ---
+    tht_pads = parse_tht_pads(pcb_path)
+    if tht_pads:
+        drill_group = ET.SubElement(root, f"{{{_SVG_NS}}}g")
+        drill_group.set("id", "drill-holes")
+        for pad in tht_pads:
+            circle = ET.SubElement(drill_group, f"{{{_SVG_NS}}}circle")
+            circle.set("cx", f"{pad.x:.4f}")
+            circle.set("cy", f"{pad.y:.4f}")
+            circle.set("r", f"{pad.drill / 2:.4f}")
+            circle.set("fill", _DRILL_HOLE_COLOR)
+        modified = True
+        logger.info("Injected %d THT drill holes", len(tht_pads))
 
     # --- Ratsnest lines (all nets, including power) ---
     if ratsnest:
