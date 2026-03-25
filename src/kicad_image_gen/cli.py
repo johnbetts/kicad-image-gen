@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 from kicad_image_gen.render_2d import LAYER_PRESETS, render_2d
+from kicad_image_gen.render_2d_composite import render_2d_composite
 from kicad_image_gen.render_3d import _VIEW_PRESETS, render_3d
 
 
@@ -39,6 +40,21 @@ def _build_parser() -> argparse.ArgumentParser:
     p2d.add_argument("-t", "--theme", default=None, help="KiCad color theme name")
     p2d.add_argument("-m", "--mirror", action="store_true", help="Mirror the board")
     p2d.add_argument("--bw", action="store_true", help="Black and white")
+    p2d.add_argument(
+        "--composite",
+        action="store_true",
+        help="Use composite mode (3D top-down base + PIL overlays)",
+    )
+    p2d.add_argument(
+        "--pad-labels",
+        action="store_true",
+        help="Show pad labels (composite mode only)",
+    )
+    p2d.add_argument(
+        "--no-ratsnest",
+        action="store_true",
+        help="Disable ratsnest overlay (composite mode only)",
+    )
 
     # --- 3d subcommand ---
     p3d = sub.add_parser("3d", help="3D viewer-style screenshot")
@@ -83,16 +99,26 @@ def _default_output(pcb: Path, suffix: str) -> Path:
 
 def _cmd_2d(args: argparse.Namespace) -> None:
     output = args.output or _default_output(args.pcb, "2d")
-    result = render_2d(
-        args.pcb,
-        output,
-        layers=args.layers,
-        width=args.width,
-        theme=args.theme,
-        mirror=args.mirror,
-        black_and_white=args.bw,
-    )
-    print(f"2D: {result}")
+    if args.composite:
+        result = render_2d_composite(
+            args.pcb,
+            output,
+            width=args.width,
+            ratsnest=not args.no_ratsnest,
+            pad_labels=args.pad_labels,
+        )
+        print(f"2D (composite): {result}")
+    else:
+        result = render_2d(
+            args.pcb,
+            output,
+            layers=args.layers,
+            width=args.width,
+            theme=args.theme,
+            mirror=args.mirror,
+            black_and_white=args.bw,
+        )
+        print(f"2D: {result}")
 
 
 def _cmd_3d(args: argparse.Namespace) -> None:
@@ -123,12 +149,15 @@ def _cmd_both(args: argparse.Namespace) -> None:
 
     renders: list[tuple[str, Path]] = []
 
-    # 2D renders
-    for side, layers_preset in [("top", "top"), ("bottom", "bottom")]:
-        out = out_dir / f"{stem}_2d_{side}.png"
-        mirror = side == "bottom"
-        render_2d(args.pcb, out, layers=layers_preset, width=args.width, mirror=mirror)
-        renders.append((f"2D {side}", out))
+    # 2D renders (composite mode — 3D top-down base + overlays)
+    out_top = out_dir / f"{stem}_2d_top.png"
+    render_2d_composite(args.pcb, out_top, width=args.width, quality=args.quality)
+    renders.append(("2D top (composite)", out_top))
+
+    # Bottom view: standard SVG-based render (composite only supports top)
+    out_bottom = out_dir / f"{stem}_2d_bottom.png"
+    render_2d(args.pcb, out_bottom, layers="bottom", width=args.width, mirror=True)
+    renders.append(("2D bottom", out_bottom))
 
     # 3D renders
     for view in ("top", "bottom", "iso"):

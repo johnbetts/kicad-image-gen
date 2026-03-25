@@ -7,7 +7,7 @@ name = "kicad-image-gen"
 version = "0.1.0"
 description = "Generate PNG screenshots of KiCad PCBs — 2D editor view and 3D renders"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = ["Pillow>=10.0"]
 
 [project.optional-dependencies]
 dev = ["pytest", "pytest-xdist"]

@@ -62,6 +62,60 @@ _RE_PAD_NUM = re.compile(r'\(pad\s+"([^"]*)"')
 _RE_REF = re.compile(r'\(property\s+"Reference"\s+"([^"]*)"')
 
 
+def parse_board_bounds(pcb_path: str | Path) -> tuple[float, float, float, float]:
+    """Parse the board outline bounding box from Edge.Cuts layer.
+
+    Scans top-level graphic primitives (gr_line, gr_rect, gr_arc) on the
+    Edge.Cuts layer and returns the overall bounding box.
+
+    Uses a block-based approach: finds each gr_* block, checks if it
+    references Edge.Cuts, then extracts start/end/mid coordinates.
+
+    Returns:
+        Tuple of (min_x, min_y, max_x, max_y) in mm.
+
+    Raises:
+        ValueError: If no Edge.Cuts geometry is found.
+    """
+    text = Path(pcb_path).read_text(encoding="utf-8")
+
+    xs: list[float] = []
+    ys: list[float] = []
+
+    coord_re = re.compile(r"\((start|end|mid)\s+([-\d.]+)\s+([-\d.]+)\)")
+
+    # Find all top-level gr_line, gr_rect, gr_arc, gr_poly blocks
+    for m in re.finditer(r"^\t\(gr_(?:line|rect|arc|poly)\b", text, re.MULTILINE):
+        block_start = m.start()
+        # Find the closing paren by counting nesting
+        depth = 0
+        block_end = block_start
+        for i in range(block_start, min(block_start + 2000, len(text))):
+            if text[i] == "(":
+                depth += 1
+            elif text[i] == ")":
+                depth -= 1
+                if depth == 0:
+                    block_end = i + 1
+                    break
+        block = text[block_start:block_end]
+
+        # Check if this block is on Edge.Cuts
+        if '"Edge.Cuts"' not in block:
+            continue
+
+        # Extract all start/end/mid coordinates
+        for cm in coord_re.finditer(block):
+            xs.append(float(cm.group(2)))
+            ys.append(float(cm.group(3)))
+
+    if not xs:
+        msg = f"No Edge.Cuts geometry found in {pcb_path}"
+        raise ValueError(msg)
+
+    return (min(xs), min(ys), max(xs), max(ys))
+
+
 def _parse_footprint_blocks(
     pcb_path: str | Path,
 ) -> list[tuple[float, float, float, str, str]]:

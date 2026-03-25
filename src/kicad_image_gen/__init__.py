@@ -1,9 +1,10 @@
 """kicad-image-gen: Generate PNG screenshots of KiCad PCBs."""
 
 from kicad_image_gen.render_2d import LAYER_PRESETS, render_2d
+from kicad_image_gen.render_2d_composite import render_2d_composite
 from kicad_image_gen.render_3d import render_3d
 
-__all__ = ["render_2d", "render_3d", "render_all", "LAYER_PRESETS"]
+__all__ = ["render_2d", "render_2d_composite", "render_3d", "render_all", "LAYER_PRESETS"]
 
 
 def render_all(

@@ -133,7 +133,7 @@ def _export_svg(
             str(svg_out),
         ]
 
-        # Default to KiCad's built-in default theme for consistent colors
+        # Default to KiCad Default theme; users can pass --theme kicad_image_gen for editor-matching
         cmd.extend(["--theme", theme or "KiCad Default"])
         if mirror:
             cmd.append("--mirror")
@@ -290,9 +290,6 @@ def _inject_overlays(
     # --- Background rect + grid (KiCad dark navy with dot grid) ---
     vb_parts = viewbox.split()
     if len(vb_parts) == 4:
-        vb_x, vb_y = float(vb_parts[0]), float(vb_parts[1])
-        vb_w, vb_h = float(vb_parts[2]), float(vb_parts[3])
-
         # Background fill
         bg_rect = ET.Element(f"{{{_SVG_NS}}}rect")
         bg_rect.set("x", vb_parts[0])

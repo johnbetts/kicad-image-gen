@@ -30,3 +30,7 @@ htmlcov/
 
 # Output images (generated, not tracked)
 output/
+reference/.history
+*.lck
+*-backups/
+*.prl

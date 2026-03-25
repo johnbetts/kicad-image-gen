@@ -1,0 +1,4781 @@
+(kicad_pcb
+  (version 20260206)
+  (generator "kicad-ai-pipeline")
+  (generator_version "10.0")
+  (general
+    (thickness 1.6)
+    (legacy_teardrops no)
+  )
+  (paper "A4")
+  (title_block
+    (title "AnalogInputTraining")
+    (date "2026-03-24")
+    (rev "v1")
+  )
+  (layers
+    (0 "F.Cu" signal)
+    (2 "B.Cu" signal)
+    (9 "F.Adhes" user "F.Adhesive")
+    (11 "B.Adhes" user "B.Adhesive")
+    (13 "F.Paste" user)
+    (15 "B.Paste" user)
+    (5 "F.SilkS" user "F.Silkscreen")
+    (7 "B.SilkS" user "B.Silkscreen")
+    (1 "F.Mask" user)
+    (3 "B.Mask" user)
+    (17 "Dwgs.User" user "User.Drawings")
+    (19 "Cmts.User" user "User.Comments")
+    (25 "Edge.Cuts" user)
+    (27 "Margin" user)
+    (31 "F.CrtYd" user "F.Courtyard")
+    (29 "B.CrtYd" user "B.Courtyard")
+    (33 "F.Fab" user "F.Fabrication")
+    (35 "B.Fab" user "B.Fabrication")
+  )
+  (setup
+    (pad_to_mask_clearance 0)
+    (allow_soldermask_bridges_in_footprints no)
+    (pcbplotparams
+      (layerselection "0x00010fc_ffffffff")
+      (outputdirectory "")
+    )
+  )
+  (net 0 "")
+  (net 1 "GND")
+  (net 2 "AIN1_RAW")
+  (net 3 "AIN1_DIV")
+  (net 4 "AIN1_PROT")
+  (net 5 "AIN2_RAW")
+  (net 6 "AIN2_DIV")
+  (net 7 "AIN2_PROT")
+  (net 8 "AIN3_RAW")
+  (net 9 "AIN3_DIV")
+  (net 10 "AIN3_PROT")
+  (net 11 "AIN4_RAW")
+  (net 12 "AIN4_DIV")
+  (net 13 "AIN4_PROT")
+  (net 14 "+3V3")
+  (net 15 "+3V3_U1_DEC")
+  (net 16 "SDA")
+  (net 17 "SCL")
+  (footprint "easyeda2kicad:MSOP-10_L3.0-W3.0-P0.50-LS5.0-BL"
+    (layer "F.Cu")
+    (at 45.75 28.58 -90.0)
+    (attr smd)
+    (uuid "fe81ade6-53b1-47d8-b69f-e0ca8e38e5a1")
+    (property "Reference" "U1"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "ADS1115"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:MSOP-10_L3.0-W3.0-P0.50-LS5.0-BL"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "16-bit 4-channel I2C ADC MSOP-10"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C37593"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start -1.58 1.07)
+      (end -1.58 -1.07)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.58 -1.07)
+      (end 1.58 -1.07)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.58 -1.07)
+      (end 1.58 1.07)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.58 1.07)
+      (end -1.58 1.07)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.32)
+      (end -0.85 0.32)
+      (layer "F.SilkS")
+      (width 0.3)
+    )
+    (fp_circle
+      (center -1.59 2.11)
+      (end -1.44 2.11)
+      (layer "F.SilkS")
+      (width 0.3)
+    )
+    (fp_circle
+      (center -1.02 2.79)
+      (end -0.92 2.79)
+      (layer "Cmts.User")
+      (width 0.2)
+    )
+    (fp_circle
+      (center -1.5 2.45)
+      (end -1.47 2.45)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "1" smd oval
+      (at -1.0 2.11)
+      (size 0.28 1.62)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "c5c6c905-d3ce-4f4c-9da1-afa203b43c8a")
+    )
+    (pad "2" smd oval
+      (at -0.5 2.11)
+      (size 0.28 1.62)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+    )
+    (pad "3" smd oval
+      (at 0.0 2.11)
+      (size 0.28 1.62)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "c1f12479-054d-4e70-ad93-dcbb41ccc49c")
+    )
+    (pad "4" smd oval
+      (at 0.5 2.11)
+      (size 0.28 1.62)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 7 "AIN2_PROT")
+      (uuid "115b4f3b-ec06-4b1b-a707-362624c408e1")
+    )
+    (pad "5" smd oval
+      (at 1.0 2.11)
+      (size 0.28 1.62)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 4 "AIN1_PROT")
+      (uuid "50920d4d-3b42-47f2-a6d1-75d8ef9a9684")
+    )
+    (pad "10" smd oval
+      (at -1.0 -2.11)
+      (size 0.28 1.62)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 17 "SCL")
+      (uuid "60a1afd5-5009-4c3c-93e3-7c96b6a10f95")
+    )
+    (pad "9" smd oval
+      (at -0.5 -2.11)
+      (size 0.28 1.62)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 16 "SDA")
+      (uuid "5eb09bd2-db1b-4d87-b536-ec710c46d2f2")
+    )
+    (pad "8" smd oval
+      (at 0.0 -2.11)
+      (size 0.28 1.62)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 15 "+3V3_U1_DEC")
+      (uuid "84b10fa4-56bd-49f5-b021-30110e6fddd6")
+    )
+    (pad "7" smd oval
+      (at 0.5 -2.11)
+      (size 0.28 1.62)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 13 "AIN4_PROT")
+      (uuid "0478e303-102d-47b4-9b9f-aba2cc06f26d")
+    )
+    (pad "6" smd oval
+      (at 1.0 -2.11)
+      (size 0.28 1.62)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 10 "AIN3_PROT")
+      (uuid "59d7edaf-16dd-46ae-acfd-c58d3b02dfbf")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/MSOP-10_3x3mm_P0.5mm.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:C0805"
+    (layer "F.Cu")
+    (at 45.61 31.88 180.0)
+    (attr smd)
+    (uuid "7bf91885-fdb7-4c31-9b9a-34e2af381b25")
+    (property "Reference" "C1"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "100nF"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:C0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "100nF ADC decoupling cap 0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C49678"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 1.81 -0.9)
+      (end 0.4 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.4 0.9)
+      (end 1.81 0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.96 0.75)
+      (end 1.96 -0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.81 -0.9)
+      (end -0.4 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.4 0.9)
+      (end -1.81 0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.96 0.75)
+      (end -1.96 -0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.63)
+      (end -0.97 0.63)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (fp_arc
+      (start 1.81 0.75)
+      (mid 1.81 0.75)
+      (end 1.96 0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start 1.81 -0.75)
+      (mid 1.81 -0.75)
+      (end 1.81 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start -1.81 0.75)
+      (mid -1.81 0.75)
+      (end -1.96 0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start -1.81 -0.75)
+      (mid -1.81 -0.75)
+      (end -1.81 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.41 1.35)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "1e8dfa03-c9fa-4f84-9ec8-fbb66dac0061")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.41 1.35)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 15 "+3V3_U1_DEC")
+      (uuid "01aa5303-08fc-41ab-b046-2746f57043c1")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:R0805"
+    (layer "F.Cu")
+    (at 16.23 12.8 -90.0)
+    (attr smd)
+    (uuid "ae295d25-4284-46ca-84a2-79e603762dd6")
+    (property "Reference" "R1"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "10K"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:R0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "10K voltage divider top 0805 — CH1"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C17414"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.48 0.92)
+      (end 1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 0.92)
+      (end 1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 -0.92)
+      (end 0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.48 0.92)
+      (end -1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 0.92)
+      (end -1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 -0.92)
+      (end -0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.64)
+      (end -0.97 0.64)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 3 "AIN1_DIV")
+      (uuid "a25a38de-4777-4b15-8466-924e3e56caae")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 2 "AIN1_RAW")
+      (uuid "7edbb5f0-298e-4a68-8a3b-19b7b6c0f9e4")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:R0805"
+    (layer "F.Cu")
+    (at 13.91 12.8 90.0)
+    (attr smd)
+    (uuid "a7aefa38-8903-4209-bc58-1a8093117bab")
+    (property "Reference" "R2"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "10K"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:R0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "10K voltage divider bottom 0805 — CH1"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C17414"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.48 0.92)
+      (end 1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 0.92)
+      (end 1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 -0.92)
+      (end 0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.48 0.92)
+      (end -1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 0.92)
+      (end -1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 -0.92)
+      (end -0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.64)
+      (end -0.97 0.64)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "8b8637a2-0dc1-407a-99f9-79f2bed3b55d")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 3 "AIN1_DIV")
+      (uuid "c58e6284-aa1b-4a1b-9802-6fb9ffb5d2a0")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+    (layer "F.Cu")
+    (at 10.58 12.8 0.0)
+    (attr smd)
+    (uuid "7c82232b-7c4c-49e4-b785-9bd6cdd3e2d1")
+    (property "Reference" "D1"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "PESD3V3"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "3.3V TVS protection SOD-323 — CH1"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C118739"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.88 -1.54)
+      (end -0.88 -1.54)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.88 -1.54)
+      (end -0.88 -0.49)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.88 1.54)
+      (end -0.88 1.54)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.88 1.54)
+      (end -0.88 0.49)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.88 -0.46)
+      (end 0.88 0.46)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center 1.4 1.46)
+      (end 1.43 1.46)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (fp_circle
+      (center 1.65 0.95)
+      (end 1.75 0.95)
+      (layer "Cmts.User")
+      (width 0.2)
+    )
+    (pad "1" smd rect
+      (at 1.24 0.95)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 4 "AIN1_PROT")
+      (uuid "40be6f63-c7fe-495c-84ed-509f92547936")
+    )
+    (pad "2" smd rect
+      (at 1.24 -0.95)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "3a0785c0-3691-4e56-a9e2-55757443ffc4")
+    )
+    (pad "3" smd rect
+      (at -1.24 0.0)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SOD-323.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:C0805"
+    (layer "F.Cu")
+    (at 7.71 12.8 90.0)
+    (attr smd)
+    (uuid "a220d37e-3fe1-4edd-8802-f52b622d588d")
+    (property "Reference" "C2"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "100nF"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:C0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "100nF anti-aliasing filter 0805 — CH1"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C49678"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 1.81 -0.9)
+      (end 0.4 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.4 0.9)
+      (end 1.81 0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.96 0.75)
+      (end 1.96 -0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.81 -0.9)
+      (end -0.4 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.4 0.9)
+      (end -1.81 0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.96 0.75)
+      (end -1.96 -0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.63)
+      (end -0.97 0.63)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (fp_arc
+      (start 1.81 0.75)
+      (mid 1.81 0.75)
+      (end 1.96 0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start 1.81 -0.75)
+      (mid 1.81 -0.75)
+      (end 1.81 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start -1.81 0.75)
+      (mid -1.81 0.75)
+      (end -1.96 0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start -1.81 -0.75)
+      (mid -1.81 -0.75)
+      (end -1.81 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.41 1.35)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "0da6bff0-deae-4880-ac81-0cafffa2dc6e")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.41 1.35)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 4 "AIN1_PROT")
+      (uuid "dad4f429-7681-4a2a-bdf8-59494c56eb06")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:CONN-TH_2P-P5.00_WJ128V-5.0-2P"
+    (layer "F.Cu")
+    (at 12.35 4.5 180.0)
+    (attr through_hole)
+    (uuid "bdb27600-8b65-45a6-97b5-311321362c8a")
+    (property "Reference" "J1"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "Screw_Terminal_2P"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:CONN-TH_2P-P5.00_WJ128V-5.0-2P"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "2-pin 5.08mm screw terminal — CH1 input"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C8269"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start -3.52 5.3)
+      (end -3.52 3.36)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -3.52 3.36)
+      (end -3.1 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -3.1 2.93)
+      (end -1.9 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.9 2.93)
+      (end -1.9 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.9 2.93)
+      (end -1.5 3.33)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.5 3.33)
+      (end -1.5 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.48 5.3)
+      (end 1.48 3.36)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.48 3.36)
+      (end 1.91 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.91 2.93)
+      (end 3.11 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.11 2.93)
+      (end 3.11 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.11 2.93)
+      (end 3.51 3.33)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.51 3.33)
+      (end 3.51 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 3.34)
+      (end -5.55 3.34)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 3.34)
+      (end -5.55 4.05)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 4.05)
+      (end -4.95 4.05)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 5.3)
+      (end -4.95 -5.0)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -5.0)
+      (end 5.05 -5.0)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 5.05 -5.0)
+      (end 5.05 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 5.05 5.3)
+      (end -4.94 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -3.52)
+      (end -5.55 -3.52)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 -3.52)
+      (end -5.55 -2.81)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 -2.81)
+      (end -4.95 -2.81)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 2.49)
+      (end 5.05 2.49)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -1.89)
+      (end 5.05 -1.89)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -3.54)
+      (end 5.05 -3.54)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_circle
+      (center -4.95 5.3)
+      (end -4.92 5.3)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "1" thru_hole circle
+      (at -2.5 0.0)
+      (size 2.0 2.0)
+      (layers "*.Cu" "*.Mask")
+      (drill 1.1999)
+      (net 2 "AIN1_RAW")
+      (uuid "542010d9-f841-45d6-b942-c82009149b8c")
+    )
+    (pad "2" thru_hole circle
+      (at 2.5 0.0)
+      (size 2.0 2.0)
+      (layers "*.Cu" "*.Mask")
+      (drill 1.1999)
+      (net 1 "GND")
+      (uuid "c3c428ed-4adc-456c-9d92-af392d90065c")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/TerminalBlock_Phoenix.3dshapes/TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.step"
+      (offset
+        (xyz 5.08 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 180.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:R0805"
+    (layer "F.Cu")
+    (at 28.3233 12.8 -90.0)
+    (attr smd)
+    (uuid "5ea4eb5c-4b6a-4494-a5f0-be433d397cfe")
+    (property "Reference" "R3"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "10K"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:R0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "10K voltage divider top 0805 — CH2"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C17414"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.48 0.92)
+      (end 1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 0.92)
+      (end 1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 -0.92)
+      (end 0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.48 0.92)
+      (end -1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 0.92)
+      (end -1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 -0.92)
+      (end -0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.64)
+      (end -0.97 0.64)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 6 "AIN2_DIV")
+      (uuid "f86e0e28-b069-4a60-8235-76fa187be614")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 5 "AIN2_RAW")
+      (uuid "48805ba2-749a-47b1-b2f9-fabac7387684")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:R0805"
+    (layer "F.Cu")
+    (at 25.8133 12.8 90.0)
+    (attr smd)
+    (uuid "3effc16f-38d4-465b-8744-682d12259bc4")
+    (property "Reference" "R4"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "10K"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:R0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "10K voltage divider bottom 0805 — CH2"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C17414"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.48 0.92)
+      (end 1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 0.92)
+      (end 1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 -0.92)
+      (end 0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.48 0.92)
+      (end -1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 0.92)
+      (end -1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 -0.92)
+      (end -0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.64)
+      (end -0.97 0.64)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "943b9857-8a6f-40f3-8c9f-a935d90016db")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 6 "AIN2_DIV")
+      (uuid "95fdddcf-1d29-4d8b-8a5d-3091dab4f62f")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+    (layer "F.Cu")
+    (at 22.4333 12.8 0.0)
+    (attr smd)
+    (uuid "6543332b-43d3-46a6-ab69-93ad94ae5bb9")
+    (property "Reference" "D2"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "PESD3V3"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "3.3V TVS protection SOD-323 — CH2"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C118739"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.88 -1.54)
+      (end -0.88 -1.54)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.88 -1.54)
+      (end -0.88 -0.49)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.88 1.54)
+      (end -0.88 1.54)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.88 1.54)
+      (end -0.88 0.49)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.88 -0.46)
+      (end 0.88 0.46)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center 1.4 1.46)
+      (end 1.43 1.46)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (fp_circle
+      (center 1.65 0.95)
+      (end 1.75 0.95)
+      (layer "Cmts.User")
+      (width 0.2)
+    )
+    (pad "1" smd rect
+      (at 1.24 0.95)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 7 "AIN2_PROT")
+      (uuid "58a54790-013d-4da7-b525-abaea6ca10db")
+    )
+    (pad "2" smd rect
+      (at 1.24 -0.95)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "b2aa937b-d1c7-43eb-93a6-5bf3eb0d5d58")
+    )
+    (pad "3" smd rect
+      (at -1.24 0.0)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SOD-323.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:C0805"
+    (layer "F.Cu")
+    (at 19.7933 12.8 90.0)
+    (attr smd)
+    (uuid "5e810da1-f547-411d-a286-66a182a0a45e")
+    (property "Reference" "C3"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "100nF"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:C0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "100nF anti-aliasing filter 0805 — CH2"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C49678"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 1.81 -0.9)
+      (end 0.4 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.4 0.9)
+      (end 1.81 0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.96 0.75)
+      (end 1.96 -0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.81 -0.9)
+      (end -0.4 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.4 0.9)
+      (end -1.81 0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.96 0.75)
+      (end -1.96 -0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.63)
+      (end -0.97 0.63)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (fp_arc
+      (start 1.81 0.75)
+      (mid 1.81 0.75)
+      (end 1.96 0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start 1.81 -0.75)
+      (mid 1.81 -0.75)
+      (end 1.81 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start -1.81 0.75)
+      (mid -1.81 0.75)
+      (end -1.96 0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start -1.81 -0.75)
+      (mid -1.81 -0.75)
+      (end -1.81 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.41 1.35)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "3bcfddd6-77f2-400c-aa83-2495f5390fd4")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.41 1.35)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 7 "AIN2_PROT")
+      (uuid "84ec1689-0d41-4b1e-beb7-c7566cca236c")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:CONN-TH_2P-P5.00_WJ128V-5.0-2P"
+    (layer "F.Cu")
+    (at 23.6833 4.5 180.0)
+    (attr through_hole)
+    (uuid "1a19a3f0-e557-4dff-959b-f98d7220242b")
+    (property "Reference" "J2"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "Screw_Terminal_2P"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:CONN-TH_2P-P5.00_WJ128V-5.0-2P"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "2-pin 5.08mm screw terminal — CH2 input"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C8269"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start -3.52 5.3)
+      (end -3.52 3.36)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -3.52 3.36)
+      (end -3.1 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -3.1 2.93)
+      (end -1.9 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.9 2.93)
+      (end -1.9 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.9 2.93)
+      (end -1.5 3.33)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.5 3.33)
+      (end -1.5 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.48 5.3)
+      (end 1.48 3.36)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.48 3.36)
+      (end 1.91 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.91 2.93)
+      (end 3.11 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.11 2.93)
+      (end 3.11 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.11 2.93)
+      (end 3.51 3.33)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.51 3.33)
+      (end 3.51 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 3.34)
+      (end -5.55 3.34)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 3.34)
+      (end -5.55 4.05)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 4.05)
+      (end -4.95 4.05)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 5.3)
+      (end -4.95 -5.0)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -5.0)
+      (end 5.05 -5.0)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 5.05 -5.0)
+      (end 5.05 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 5.05 5.3)
+      (end -4.94 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -3.52)
+      (end -5.55 -3.52)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 -3.52)
+      (end -5.55 -2.81)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 -2.81)
+      (end -4.95 -2.81)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 2.49)
+      (end 5.05 2.49)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -1.89)
+      (end 5.05 -1.89)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -3.54)
+      (end 5.05 -3.54)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_circle
+      (center -4.95 5.3)
+      (end -4.92 5.3)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "1" thru_hole circle
+      (at -2.5 0.0)
+      (size 2.0 2.0)
+      (layers "*.Cu" "*.Mask")
+      (drill 1.1999)
+      (net 5 "AIN2_RAW")
+      (uuid "078485b6-b0b5-483a-96fb-18b99fc21129")
+    )
+    (pad "2" thru_hole circle
+      (at 2.5 0.0)
+      (size 2.0 2.0)
+      (layers "*.Cu" "*.Mask")
+      (drill 1.1999)
+      (net 1 "GND")
+      (uuid "eb4bf68a-5de2-4d16-8f61-eab6b0d87ec5")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/TerminalBlock_Phoenix.3dshapes/TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.step"
+      (offset
+        (xyz 5.08 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 180.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:R0805"
+    (layer "F.Cu")
+    (at 40.4167 12.8 -90.0)
+    (attr smd)
+    (uuid "1966f0d3-35f2-476a-9c34-f520ffb1768d")
+    (property "Reference" "R5"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "10K"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:R0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "10K voltage divider top 0805 — CH3"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C17414"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.48 0.92)
+      (end 1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 0.92)
+      (end 1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 -0.92)
+      (end 0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.48 0.92)
+      (end -1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 0.92)
+      (end -1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 -0.92)
+      (end -0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.64)
+      (end -0.97 0.64)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 9 "AIN3_DIV")
+      (uuid "14c05773-1f8b-4f91-a220-1a846157d7b4")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 8 "AIN3_RAW")
+      (uuid "81d12808-2978-4633-a268-14883fa26b58")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:R0805"
+    (layer "F.Cu")
+    (at 37.7167 12.8 90.0)
+    (attr smd)
+    (uuid "af3d50f4-9fae-4a1d-8a31-44606d8c700b")
+    (property "Reference" "R6"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "10K"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:R0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "10K voltage divider bottom 0805 — CH3"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C17414"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.48 0.92)
+      (end 1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 0.92)
+      (end 1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 -0.92)
+      (end 0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.48 0.92)
+      (end -1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 0.92)
+      (end -1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 -0.92)
+      (end -0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.64)
+      (end -0.97 0.64)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "2a9fa6e5-aa56-4c82-bd7d-dafb41b82bde")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 9 "AIN3_DIV")
+      (uuid "1dc23143-e4fe-4ead-9f13-94e05247a0d9")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+    (layer "F.Cu")
+    (at 34.2867 12.8 0.0)
+    (attr smd)
+    (uuid "0072570c-7721-4434-903d-fc2630759289")
+    (property "Reference" "D3"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "PESD3V3"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "3.3V TVS protection SOD-323 — CH3"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C118739"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.88 -1.54)
+      (end -0.88 -1.54)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.88 -1.54)
+      (end -0.88 -0.49)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.88 1.54)
+      (end -0.88 1.54)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.88 1.54)
+      (end -0.88 0.49)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.88 -0.46)
+      (end 0.88 0.46)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center 1.4 1.46)
+      (end 1.43 1.46)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (fp_circle
+      (center 1.65 0.95)
+      (end 1.75 0.95)
+      (layer "Cmts.User")
+      (width 0.2)
+    )
+    (pad "1" smd rect
+      (at 1.24 0.95)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 10 "AIN3_PROT")
+      (uuid "4136e325-6b9c-4570-bec9-320c334808ce")
+    )
+    (pad "2" smd rect
+      (at 1.24 -0.95)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "6eece0c4-3d1e-41dc-9756-a65b55fa27e3")
+    )
+    (pad "3" smd rect
+      (at -1.24 0.0)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SOD-323.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:C0805"
+    (layer "F.Cu")
+    (at 31.8767 12.8 90.0)
+    (attr smd)
+    (uuid "5674961c-fd0b-4557-beaa-641a6c226ef6")
+    (property "Reference" "C4"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "100nF"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:C0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "100nF anti-aliasing filter 0805 — CH3"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C49678"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 1.81 -0.9)
+      (end 0.4 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.4 0.9)
+      (end 1.81 0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.96 0.75)
+      (end 1.96 -0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.81 -0.9)
+      (end -0.4 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.4 0.9)
+      (end -1.81 0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.96 0.75)
+      (end -1.96 -0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.63)
+      (end -0.97 0.63)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (fp_arc
+      (start 1.81 0.75)
+      (mid 1.81 0.75)
+      (end 1.96 0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start 1.81 -0.75)
+      (mid 1.81 -0.75)
+      (end 1.81 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start -1.81 0.75)
+      (mid -1.81 0.75)
+      (end -1.96 0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start -1.81 -0.75)
+      (mid -1.81 -0.75)
+      (end -1.81 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.41 1.35)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "2def24f1-5f51-48d8-a360-0b4472110a6c")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.41 1.35)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 10 "AIN3_PROT")
+      (uuid "22daeae5-2df6-4eaf-955f-2da49068f16b")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:CONN-TH_2P-P5.00_WJ128V-5.0-2P"
+    (layer "F.Cu")
+    (at 35.0167 4.5 180.0)
+    (attr through_hole)
+    (uuid "83c80a36-1634-48e3-9206-82f74d85fde6")
+    (property "Reference" "J3"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "Screw_Terminal_2P"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:CONN-TH_2P-P5.00_WJ128V-5.0-2P"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "2-pin 5.08mm screw terminal — CH3 input"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C8269"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start -3.52 5.3)
+      (end -3.52 3.36)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -3.52 3.36)
+      (end -3.1 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -3.1 2.93)
+      (end -1.9 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.9 2.93)
+      (end -1.9 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.9 2.93)
+      (end -1.5 3.33)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.5 3.33)
+      (end -1.5 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.48 5.3)
+      (end 1.48 3.36)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.48 3.36)
+      (end 1.91 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.91 2.93)
+      (end 3.11 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.11 2.93)
+      (end 3.11 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.11 2.93)
+      (end 3.51 3.33)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.51 3.33)
+      (end 3.51 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 3.34)
+      (end -5.55 3.34)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 3.34)
+      (end -5.55 4.05)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 4.05)
+      (end -4.95 4.05)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 5.3)
+      (end -4.95 -5.0)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -5.0)
+      (end 5.05 -5.0)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 5.05 -5.0)
+      (end 5.05 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 5.05 5.3)
+      (end -4.94 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -3.52)
+      (end -5.55 -3.52)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 -3.52)
+      (end -5.55 -2.81)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 -2.81)
+      (end -4.95 -2.81)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 2.49)
+      (end 5.05 2.49)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -1.89)
+      (end 5.05 -1.89)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -3.54)
+      (end 5.05 -3.54)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_circle
+      (center -4.95 5.3)
+      (end -4.92 5.3)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "1" thru_hole circle
+      (at -2.5 0.0)
+      (size 2.0 2.0)
+      (layers "*.Cu" "*.Mask")
+      (drill 1.1999)
+      (net 8 "AIN3_RAW")
+      (uuid "e339fd10-4c9c-4819-90e1-e69b9e300a0b")
+    )
+    (pad "2" thru_hole circle
+      (at 2.5 0.0)
+      (size 2.0 2.0)
+      (layers "*.Cu" "*.Mask")
+      (drill 1.1999)
+      (net 1 "GND")
+      (uuid "e61f7735-b601-4065-9f9d-88acff15ec78")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/TerminalBlock_Phoenix.3dshapes/TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.step"
+      (offset
+        (xyz 5.08 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 180.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:R0805"
+    (layer "F.Cu")
+    (at 52.51 12.8 -90.0)
+    (attr smd)
+    (uuid "6e237e48-f463-4084-a372-655547cfa3fd")
+    (property "Reference" "R7"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "10K"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:R0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "10K voltage divider top 0805 — CH4"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C17414"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.48 0.92)
+      (end 1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 0.92)
+      (end 1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 -0.92)
+      (end 0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.48 0.92)
+      (end -1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 0.92)
+      (end -1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 -0.92)
+      (end -0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.64)
+      (end -0.97 0.64)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 12 "AIN4_DIV")
+      (uuid "6232525d-5161-476c-ae15-9a79247d84c1")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 11 "AIN4_RAW")
+      (uuid "306db354-0112-49ba-9209-753cf6b6e89d")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:R0805"
+    (layer "F.Cu")
+    (at 49.62 12.8 90.0)
+    (attr smd)
+    (uuid "08b4a401-c851-4b81-afff-21100ba4734b")
+    (property "Reference" "R8"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "10K"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:R0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "10K voltage divider bottom 0805 — CH4"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C17414"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.48 0.92)
+      (end 1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 0.92)
+      (end 1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 -0.92)
+      (end 0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.48 0.92)
+      (end -1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 0.92)
+      (end -1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 -0.92)
+      (end -0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.64)
+      (end -0.97 0.64)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "55d29338-9be4-4b8d-a039-4af0d8678794")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 12 "AIN4_DIV")
+      (uuid "56dbed48-03f0-4351-b874-fb919b21b584")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+    (layer "F.Cu")
+    (at 46.14 12.8 0.0)
+    (attr smd)
+    (uuid "2830ed50-af75-447b-8aa0-5440095f47e9")
+    (property "Reference" "D4"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "PESD3V3"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "3.3V TVS protection SOD-323 — CH4"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C118739"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.88 -1.54)
+      (end -0.88 -1.54)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.88 -1.54)
+      (end -0.88 -0.49)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.88 1.54)
+      (end -0.88 1.54)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.88 1.54)
+      (end -0.88 0.49)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.88 -0.46)
+      (end 0.88 0.46)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center 1.4 1.46)
+      (end 1.43 1.46)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (fp_circle
+      (center 1.65 0.95)
+      (end 1.75 0.95)
+      (layer "Cmts.User")
+      (width 0.2)
+    )
+    (pad "1" smd rect
+      (at 1.24 0.95)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 13 "AIN4_PROT")
+      (uuid "12b166fe-8202-41cb-ad8f-38403ff7e2fb")
+    )
+    (pad "2" smd rect
+      (at 1.24 -0.95)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "8e557d0b-0d40-4047-81f3-435f8aeb6ea6")
+    )
+    (pad "3" smd rect
+      (at -1.24 0.0)
+      (size 1.07 0.6)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SOD-323.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:C0805"
+    (layer "F.Cu")
+    (at 43.96 12.8 90.0)
+    (attr smd)
+    (uuid "3e5ba624-0aca-410f-831d-885d1106323a")
+    (property "Reference" "C5"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "100nF"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:C0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "100nF anti-aliasing filter 0805 — CH4"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C49678"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 1.81 -0.9)
+      (end 0.4 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 0.4 0.9)
+      (end 1.81 0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.96 0.75)
+      (end 1.96 -0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.81 -0.9)
+      (end -0.4 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.4 0.9)
+      (end -1.81 0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.96 0.75)
+      (end -1.96 -0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.63)
+      (end -0.97 0.63)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (fp_arc
+      (start 1.81 0.75)
+      (mid 1.81 0.75)
+      (end 1.96 0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start 1.81 -0.75)
+      (mid 1.81 -0.75)
+      (end 1.81 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start -1.81 0.75)
+      (mid -1.81 0.75)
+      (end -1.96 0.75)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_arc
+      (start -1.81 -0.75)
+      (mid -1.81 -0.75)
+      (end -1.81 -0.9)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.41 1.35)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 1 "GND")
+      (uuid "78f63e69-f89e-4f31-9216-6439ad2769a2")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.41 1.35)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 13 "AIN4_PROT")
+      (uuid "c29109cd-4fe7-4627-a760-7887d26b5809")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:CONN-TH_2P-P5.00_WJ128V-5.0-2P"
+    (layer "F.Cu")
+    (at 46.35 4.5 180.0)
+    (attr through_hole)
+    (uuid "e5b06cc4-cd76-464e-9403-3048df60377a")
+    (property "Reference" "J4"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "Screw_Terminal_2P"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:CONN-TH_2P-P5.00_WJ128V-5.0-2P"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "2-pin 5.08mm screw terminal — CH4 input"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C8269"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start -3.52 5.3)
+      (end -3.52 3.36)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -3.52 3.36)
+      (end -3.1 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -3.1 2.93)
+      (end -1.9 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.9 2.93)
+      (end -1.9 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.9 2.93)
+      (end -1.5 3.33)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -1.5 3.33)
+      (end -1.5 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.48 5.3)
+      (end 1.48 3.36)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.48 3.36)
+      (end 1.91 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 1.91 2.93)
+      (end 3.11 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.11 2.93)
+      (end 3.11 2.93)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.11 2.93)
+      (end 3.51 3.33)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 3.51 3.33)
+      (end 3.51 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 3.34)
+      (end -5.55 3.34)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 3.34)
+      (end -5.55 4.05)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 4.05)
+      (end -4.95 4.05)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 5.3)
+      (end -4.95 -5.0)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -5.0)
+      (end 5.05 -5.0)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 5.05 -5.0)
+      (end 5.05 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start 5.05 5.3)
+      (end -4.94 5.3)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -3.52)
+      (end -5.55 -3.52)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 -3.52)
+      (end -5.55 -2.81)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -5.55 -2.81)
+      (end -4.95 -2.81)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 2.49)
+      (end 5.05 2.49)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -1.89)
+      (end 5.05 -1.89)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_line
+      (start -4.95 -3.54)
+      (end 5.05 -3.54)
+      (layer "F.SilkS")
+      (width 0.25)
+    )
+    (fp_circle
+      (center -4.95 5.3)
+      (end -4.92 5.3)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "1" thru_hole circle
+      (at -2.5 0.0)
+      (size 2.0 2.0)
+      (layers "*.Cu" "*.Mask")
+      (drill 1.1999)
+      (net 11 "AIN4_RAW")
+      (uuid "1988482c-2cfc-4a4a-b015-3361ee5391f5")
+    )
+    (pad "2" thru_hole circle
+      (at 2.5 0.0)
+      (size 2.0 2.0)
+      (layers "*.Cu" "*.Mask")
+      (drill 1.1999)
+      (net 1 "GND")
+      (uuid "d213b07d-df76-4262-8de8-78ad76d74e7f")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/TerminalBlock_Phoenix.3dshapes/TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal.step"
+      (offset
+        (xyz 5.08 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 180.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:R0805"
+    (layer "F.Cu")
+    (at 52.86 22.16 0.0)
+    (attr smd)
+    (uuid "bd10cd95-60d2-419d-959b-89b66946c277")
+    (property "Reference" "R9"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "4.7K"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:R0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "4.7K I2C SDA pull-up 0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C17673"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.48 0.92)
+      (end 1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 0.92)
+      (end 1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 -0.92)
+      (end 0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.48 0.92)
+      (end -1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 0.92)
+      (end -1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 -0.92)
+      (end -0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.64)
+      (end -0.97 0.64)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 16 "SDA")
+      (uuid "395a638f-b2d1-423a-ae50-e9f425b88aad")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 14 "+3V3")
+      (uuid "41e2c8ef-b36f-44cd-9cbb-1fd26e23d53f")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "easyeda2kicad:R0805"
+    (layer "F.Cu")
+    (at 52.86 25.16 0.0)
+    (attr smd)
+    (uuid "be5b192f-772d-43c4-989d-fd3f22f9f15c")
+    (property "Reference" "R10"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "4.7K"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "easyeda2kicad:R0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "4.7K I2C SCL pull-up 0805"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "LCSC" "C17673"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_text user "%R"
+      (at 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (fp_line
+      (start 0.48 0.92)
+      (end 1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 0.92)
+      (end 1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start 1.76 -0.92)
+      (end 0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -0.48 0.92)
+      (end -1.76 0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 0.92)
+      (end -1.76 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_line
+      (start -1.76 -0.92)
+      (end -0.48 -0.92)
+      (layer "F.SilkS")
+      (width 0.15)
+    )
+    (fp_circle
+      (center -1.0 0.64)
+      (end -0.97 0.64)
+      (layer "F.Fab")
+      (width 0.06)
+    )
+    (pad "2" smd rect
+      (at 1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 17 "SCL")
+      (uuid "719373d7-74d5-47af-adb6-7cdf77de3a23")
+    )
+    (pad "1" smd rect
+      (at -1.0 0.0)
+      (size 1.13 1.38)
+      (layers "F.Cu" "F.Paste" "F.Mask")
+      (net 14 "+3V3")
+      (uuid "01c113b9-8fdd-4411-84e1-1536a7bad113")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "PinHeader_1x04"
+    (layer "F.Cu")
+    (at 57.0 22.5 0.0)
+    (attr through_hole)
+    (uuid "7fc932c5-6f1e-44b5-9cf8-483420f2a209")
+    (property "Reference" "J5"
+      (at 0.0 0.0 0.0)
+      (layer "F.SilkS")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "PinHeader_1x04"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "PinHeader_1x04"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "4-pin 2.54mm header — MCU I2C interface"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_line
+      (start -1.85 -1.85)
+      (end 1.85 -1.85)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start 1.85 -1.85)
+      (end 1.85 9.47)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start 1.85 9.47)
+      (end -1.85 9.47)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start -1.85 9.47)
+      (end -1.85 -1.85)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (pad "1" thru_hole circle
+      (at 0.0 0.0)
+      (size 1.7 1.7)
+      (layers "F.Cu" "B.Cu" "F.Mask" "B.Mask")
+      (drill 1.0)
+      (net 16 "SDA")
+      (uuid "27ffbdd2-8d1e-4db0-95e5-b9e75c5b13b4")
+    )
+    (pad "2" thru_hole circle
+      (at 0.0 2.54)
+      (size 1.7 1.7)
+      (layers "F.Cu" "B.Cu" "F.Mask" "B.Mask")
+      (drill 1.0)
+      (net 17 "SCL")
+      (uuid "8c648eb3-1ee3-4c9e-afd5-0150461401bb")
+    )
+    (pad "3" thru_hole circle
+      (at 0.0 5.08)
+      (size 1.7 1.7)
+      (layers "F.Cu" "B.Cu" "F.Mask" "B.Mask")
+      (drill 1.0)
+      (net 14 "+3V3")
+      (uuid "ca14bb12-1456-4fd9-aa6c-14d578f04d9c")
+    )
+    (pad "4" thru_hole circle
+      (at 0.0 7.62)
+      (size 1.7 1.7)
+      (layers "F.Cu" "B.Cu" "F.Mask" "B.Mask")
+      (drill 1.0)
+      (net 1 "GND")
+      (uuid "7637d348-6bc7-46b0-bd57-4632f0a80655")
+    )
+    (model "${KICAD10_3DMODEL_DIR}/Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x04_Vertical.step"
+      (offset
+        (xyz 0.0 0.0 0.0)
+      )
+      (scale
+        (xyz 1.0 1.0 1.0)
+      )
+      (rotate
+        (xyz 0.0 0.0 0.0)
+      )
+    )
+  )
+  (footprint "MountingHole:MountingHole_2.7mm_M2.5"
+    (layer "F.Cu")
+    (at 3.5 3.5 0.0)
+    (attr exclude_from_pos_files exclude_from_bom)
+    (property "Reference" "H1"
+      (at 0.0 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "MountingHole"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_line
+      (start -2.1 -2.1)
+      (end 2.1 -2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start 2.1 -2.1)
+      (end 2.1 2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start 2.1 2.1)
+      (end -2.1 2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start -2.1 2.1)
+      (end -2.1 -2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (pad "" np_thru_hole circle
+      (at 0.0 0.0)
+      (size 3.2 3.2)
+      (layers "*.Cu" "*.Mask")
+      (drill 3.2)
+    )
+  )
+  (footprint "MountingHole:MountingHole_2.7mm_M2.5"
+    (layer "F.Cu")
+    (at 56.5 3.5 0.0)
+    (attr exclude_from_pos_files exclude_from_bom)
+    (property "Reference" "H2"
+      (at 0.0 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "MountingHole"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_line
+      (start -2.1 -2.1)
+      (end 2.1 -2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start 2.1 -2.1)
+      (end 2.1 2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start 2.1 2.1)
+      (end -2.1 2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start -2.1 2.1)
+      (end -2.1 -2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (pad "" np_thru_hole circle
+      (at 0.0 0.0)
+      (size 3.2 3.2)
+      (layers "*.Cu" "*.Mask")
+      (drill 3.2)
+    )
+  )
+  (footprint "MountingHole:MountingHole_2.7mm_M2.5"
+    (layer "F.Cu")
+    (at 56.5 36.5 0.0)
+    (attr exclude_from_pos_files exclude_from_bom)
+    (property "Reference" "H3"
+      (at 0.0 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "MountingHole"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_line
+      (start -2.1 -2.1)
+      (end 2.1 -2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start 2.1 -2.1)
+      (end 2.1 2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start 2.1 2.1)
+      (end -2.1 2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start -2.1 2.1)
+      (end -2.1 -2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (pad "" np_thru_hole circle
+      (at 0.0 0.0)
+      (size 3.2 3.2)
+      (layers "*.Cu" "*.Mask")
+      (drill 3.2)
+    )
+  )
+  (footprint "MountingHole:MountingHole_2.7mm_M2.5"
+    (layer "F.Cu")
+    (at 3.5 36.5 0.0)
+    (attr exclude_from_pos_files exclude_from_bom)
+    (property "Reference" "H4"
+      (at 0.0 0.0 0.0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+      )
+    )
+    (property "Value" "MountingHole"
+      (at 0.0 0.0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5"
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer "F.Fab")
+      (effects
+        (font
+          (size 1.0 1.0)
+        )
+        (hide yes)
+      )
+    )
+    (fp_line
+      (start -2.1 -2.1)
+      (end 2.1 -2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start 2.1 -2.1)
+      (end 2.1 2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start 2.1 2.1)
+      (end -2.1 2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (fp_line
+      (start -2.1 2.1)
+      (end -2.1 -2.1)
+      (layer "F.CrtYd")
+      (width 0.153)
+    )
+    (pad "" np_thru_hole circle
+      (at 0.0 0.0)
+      (size 3.2 3.2)
+      (layers "*.Cu" "*.Mask")
+      (drill 3.2)
+    )
+  )
+  (gr_line
+    (start 0.0 0.0)
+    (end 60.0 0.0)
+    (layer "Edge.Cuts")
+    (width 0.05)
+  )
+  (gr_line
+    (start 60.0 0.0)
+    (end 60.0 40.0)
+    (layer "Edge.Cuts")
+    (width 0.05)
+  )
+  (gr_line
+    (start 60.0 40.0)
+    (end 0.0 40.0)
+    (layer "Edge.Cuts")
+    (width 0.05)
+  )
+  (gr_line
+    (start 0.0 40.0)
+    (end 0.0 0.0)
+    (layer "Edge.Cuts")
+    (width 0.05)
+  )
+  (zone
+    (net 1)
+    (net_name "GND")
+    (layer "F.Cu")
+    (uuid "3da23065-aebf-4e3c-b971-f03859c7ec1e")
+    (hatch edge 0.508)
+    (connect_pads
+      (clearance 0.3)
+    )
+    (min_thickness 0.25)
+    (filled_areas_thickness no)
+    (fill
+      (thermal_gap 0.3)
+      (thermal_bridge_width 0.5)
+    )
+    (polygon
+      (pts
+        (xy 0.0 0.0)
+        (xy 60.0 0.0)
+        (xy 60.0 40.0)
+        (xy 0.0 40.0)
+        (xy 0.0 0.0)
+      )
+    )
+  )
+  (zone
+    (net 1)
+    (net_name "GND")
+    (layer "B.Cu")
+    (uuid "afe3de50-d9de-4037-b7c5-a0ab8e2757b9")
+    (hatch edge 0.508)
+    (connect_pads
+      (clearance 0.3)
+    )
+    (min_thickness 0.25)
+    (filled_areas_thickness no)
+    (fill
+      (thermal_gap 0.3)
+      (thermal_bridge_width 0.5)
+    )
+    (polygon
+      (pts
+        (xy 0.0 0.0)
+        (xy 60.0 0.0)
+        (xy 60.0 40.0)
+        (xy 0.0 40.0)
+        (xy 0.0 0.0)
+      )
+    )
+  )
+  (zone
+    (net 0)
+    (net_name "")
+    (layers "F.Cu" "B.Cu")
+    (uuid "4fb34685-6858-4a0c-a4e4-b4073488292e")
+    (hatch edge 0.508)
+    (keepout
+      (copperpour not_allowed)
+      (footprints allowed)
+      (pads allowed)
+      (tracks not_allowed)
+      (vias not_allowed)
+    )
+    (polygon
+      (pts
+        (xy 6.1 3.5)
+        (xy 5.75167 4.8)
+        (xy 4.8 5.75167)
+        (xy 3.5 6.1)
+        (xy 2.2 5.75167)
+        (xy 1.24833 4.8)
+        (xy 0.9 3.5)
+        (xy 1.24833 2.2)
+        (xy 2.2 1.24833)
+        (xy 3.5 0.9)
+        (xy 4.8 1.24833)
+        (xy 5.75167 2.2)
+      )
+    )
+  )
+  (zone
+    (net 0)
+    (net_name "")
+    (layers "F.Cu" "B.Cu")
+    (uuid "d05a5d69-84be-4522-a1e9-5abeca116a5e")
+    (hatch edge 0.508)
+    (keepout
+      (copperpour not_allowed)
+      (footprints allowed)
+      (pads allowed)
+      (tracks not_allowed)
+      (vias not_allowed)
+    )
+    (polygon
+      (pts
+        (xy 59.1 3.5)
+        (xy 58.7517 4.8)
+        (xy 57.8 5.75167)
+        (xy 56.5 6.1)
+        (xy 55.2 5.75167)
+        (xy 54.2483 4.8)
+        (xy 53.9 3.5)
+        (xy 54.2483 2.2)
+        (xy 55.2 1.24833)
+        (xy 56.5 0.9)
+        (xy 57.8 1.24833)
+        (xy 58.7517 2.2)
+      )
+    )
+  )
+  (zone
+    (net 0)
+    (net_name "")
+    (layers "F.Cu" "B.Cu")
+    (uuid "9f8e8117-7ba4-4ce9-9f62-dc7e8f5e7d6f")
+    (hatch edge 0.508)
+    (keepout
+      (copperpour not_allowed)
+      (footprints allowed)
+      (pads allowed)
+      (tracks not_allowed)
+      (vias not_allowed)
+    )
+    (polygon
+      (pts
+        (xy 59.1 36.5)
+        (xy 58.7517 37.8)
+        (xy 57.8 38.7517)
+        (xy 56.5 39.1)
+        (xy 55.2 38.7517)
+        (xy 54.2483 37.8)
+        (xy 53.9 36.5)
+        (xy 54.2483 35.2)
+        (xy 55.2 34.2483)
+        (xy 56.5 33.9)
+        (xy 57.8 34.2483)
+        (xy 58.7517 35.2)
+      )
+    )
+  )
+  (zone
+    (net 0)
+    (net_name "")
+    (layers "F.Cu" "B.Cu")
+    (uuid "eab81fde-e91f-445e-a835-5d94e7ee7c28")
+    (hatch edge 0.508)
+    (keepout
+      (copperpour not_allowed)
+      (footprints allowed)
+      (pads allowed)
+      (tracks not_allowed)
+      (vias not_allowed)
+    )
+    (polygon
+      (pts
+        (xy 6.1 36.5)
+        (xy 5.75167 37.8)
+        (xy 4.8 38.7517)
+        (xy 3.5 39.1)
+        (xy 2.2 38.7517)
+        (xy 1.24833 37.8)
+        (xy 0.9 36.5)
+        (xy 1.24833 35.2)
+        (xy 2.2 34.2483)
+        (xy 3.5 33.9)
+        (xy 4.8 34.2483)
+        (xy 5.75167 35.2)
+      )
+    )
+  )
+)
