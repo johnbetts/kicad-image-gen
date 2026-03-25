@@ -41,7 +41,7 @@ def render_2d(
     mirror: bool = False,
     black_and_white: bool = False,
     ratsnest: bool = True,
-    pad_labels: bool = True,
+    pad_labels: bool = False,
 ) -> Path:
     """Export a 2D editor-style PNG image of a KiCad PCB.
 
@@ -86,9 +86,8 @@ def render_2d(
         msg = "SVG export failed — ensure kicad-cli supports 'pcb export svg'"
         raise RuntimeError(msg)
 
-    # Step 2: Inject overlays into SVG
-    if ratsnest or pad_labels:
-        _inject_overlays(svg_path, pcb_path, ratsnest=ratsnest, pad_labels=pad_labels)
+    # Step 2: Inject overlays into SVG (always runs for background/grid)
+    _inject_overlays(svg_path, pcb_path, ratsnest=ratsnest, pad_labels=pad_labels)
 
     # Step 3: Convert SVG → PNG
     try:
@@ -129,15 +128,13 @@ def _export_svg(
             "-l",
             layers,
             "--exclude-drawing-sheet",
-            "--page-size-mode",
-            "2",
-            "--sketch-pads-on-fab-layers",
+            "--fit-page-to-board",
             "-o",
             str(svg_out),
         ]
 
-        # Default to user's KiCad theme for editor-matching colors
-        cmd.extend(["--theme", theme or "user"])
+        # Default to KiCad's built-in default theme for consistent colors
+        cmd.extend(["--theme", theme or "KiCad Default"])
         if mirror:
             cmd.append("--mirror")
         if black_and_white:
@@ -252,16 +249,19 @@ def _convert_sips(svg_path: Path, output_path: Path, width: int) -> Path | None:
 
 _SVG_NS = "http://www.w3.org/2000/svg"
 
+# KiCad editor dark navy background color
+_BG_COLOR = "#001023"
+
 # Ratsnest: slightly more visible than KiCad's thin gray, but not overwhelming
-_RATSNEST_COLOR = "#88aacc"
-_RATSNEST_OPACITY = "0.40"
-_RATSNEST_STROKE_WIDTH = "0.15"
+_RATSNEST_COLOR = "#6688aa"
+_RATSNEST_OPACITY = "0.30"
+_RATSNEST_STROKE_WIDTH = "0.12"
 
 # Pad labels: pin number inside pad (cyan), net name offset (smaller, yellow)
-_PAD_NUM_FONT_SIZE = "0.9"
-_PAD_NUM_COLOR = "#00dddd"
-_NET_NAME_FONT_SIZE = "0.5"
-_NET_NAME_COLOR = "#ccaa44"
+_PAD_NUM_FONT_SIZE = "0.75"
+_PAD_NUM_COLOR = "#00cccc"
+_NET_NAME_FONT_SIZE = "0.40"
+_NET_NAME_COLOR = "#9988aa"
 
 
 def _inject_overlays(
@@ -286,6 +286,23 @@ def _inject_overlays(
         return
 
     modified = False
+
+    # --- Background rect + grid (KiCad dark navy with dot grid) ---
+    vb_parts = viewbox.split()
+    if len(vb_parts) == 4:
+        vb_x, vb_y = float(vb_parts[0]), float(vb_parts[1])
+        vb_w, vb_h = float(vb_parts[2]), float(vb_parts[3])
+
+        # Background fill
+        bg_rect = ET.Element(f"{{{_SVG_NS}}}rect")
+        bg_rect.set("x", vb_parts[0])
+        bg_rect.set("y", vb_parts[1])
+        bg_rect.set("width", vb_parts[2])
+        bg_rect.set("height", vb_parts[3])
+        bg_rect.set("fill", _BG_COLOR)
+        root.insert(0, bg_rect)
+
+        modified = True
 
     # --- Ratsnest lines (all nets, including power) ---
     if ratsnest:
