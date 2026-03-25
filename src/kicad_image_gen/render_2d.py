@@ -23,7 +23,7 @@ from kicad_image_gen.ratsnest import (
 logger = logging.getLogger(__name__)
 
 # Layer order matters: later layers render on top. F.Cu last so pads show as red.
-_DEFAULT_LAYERS_TOP = "F.Mask,F.Fab,Edge.Cuts,F.Cu,F.SilkS"
+_DEFAULT_LAYERS_TOP = "B.Cu,B.SilkS,B.Mask,B.Fab,F.Mask,F.Fab,Edge.Cuts,F.Cu,F.SilkS"
 _DEFAULT_LAYERS_BOTTOM = "F.Cu,F.SilkS,F.Mask,F.Fab,B.Mask,B.Fab,B.CrtYd,Edge.Cuts,B.Cu,B.SilkS"
 _DEFAULT_WIDTH = 4800
 
@@ -49,7 +49,7 @@ def render_2d(
     mirror: bool = False,
     black_and_white: bool = False,
     ratsnest: bool = True,
-    pad_labels: bool = False,
+    pad_labels: bool = True,
     grid_dots: bool = False,
 ) -> Path:
     """Export a 2D editor-style PNG image of a KiCad PCB.
@@ -265,7 +265,8 @@ _SVG_NS = "http://www.w3.org/2000/svg"
 _BG_COLOR = "#001023"
 
 # Board substrate fill (inside Edge.Cuts, behind all other layers)
-_BOARD_FILL_COLOR = "#232d3a"
+# Slightly lighter than background to show board area, but not too gray
+_BOARD_FILL_COLOR = "#0d1a2e"
 
 # Mounting holes: bright cyan like KiCad editor
 _MOUNTING_HOLE_COLOR = "#1ac4d2"
@@ -274,9 +275,10 @@ _MOUNTING_HOLE_COLOR = "#1ac4d2"
 _DRILL_HOLE_COLOR = "#001023"
 
 # Ratsnest: slightly more visible than KiCad's thin gray, but not overwhelming
-_RATSNEST_COLOR = "#557799"
-_RATSNEST_OPACITY = "0.02"
-_RATSNEST_STROKE_WIDTH = "0.08"
+# Ratsnest: visible but not overwhelming — slightly bolder than KiCad's faint lines
+_RATSNEST_COLOR = "#6699bb"
+_RATSNEST_OPACITY = "0.35"
+_RATSNEST_STROKE_WIDTH = "0.12"
 
 # Pad labels: pin number inside pad (cyan), net name offset (smaller, muted)
 _PAD_NUM_COLOR = "#00cccc"
