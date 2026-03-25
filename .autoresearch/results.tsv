@@ -1,0 +1,21 @@
+iteration	val_bpb	avg_mae	avg_bg	avg_hist	status	hypothesis
+0	1.7371	53.73	37.94	1.6476	baseline	Unmodified baseline
+1	1.1049	37.53	18.40	1.1661	KEEP	Inject dark navy background rect
+2	1.1049	37.53	18.40	1.1661	NEUTRAL	fit-page-to-board margins (no change)
+3	1.0995	37.35	18.40	1.1655	KEEP	Smaller labels, muted net name color
+4	1.0952	37.14	18.40	1.1626	KEEP	More subtle ratsnest (lower opacity/thinner)
+6	1.0981	37.12	18.64	1.1645	DISCARD	Grid dots increased bg_error
+7	1.0981	37.12	18.64	1.1645	DISCARD	Margin layer - no effect, stale state
+8	1.0902	36.88	18.64	1.1648	KEEP	Disable pad labels (not in reference screenshots)
+9	1.6810	52.39	37.94	1.6541	DISCARD	Remove ratsnest - broke bg injection
+10	1.0928	37.00	18.64	1.1676	DISCARD	Disable ratsnest (worse without it, but kept bg-always-inject fix)
+11	1.0873	36.89	18.40	1.1630	KEEP	Remove grid dots pattern (bg_error improved)
+12	1.0873	36.89	18.40	1.1630	NEUTRAL	Remove Margin layer (no effect)
+13	1.1069	37.24	18.40	1.1682	DISCARD	Add F.Paste/B.Paste layers (worse)
+14	1.0884	36.90	18.40	1.1689	DISCARD	Darker ratsnest color (slightly worse)
+15	1.0873	36.89	18.40	1.1630	NEUTRAL	Remove B.CrtYd (no effect)
+16	1.0953	37.06	18.40	1.1638	DISCARD	Remove B.Fab (worse - lost needed content)
+17	1.0873	36.89	18.40	1.1630	NEUTRAL	Use KiCad Default theme (same score, more portable)
+18	1.0873	36.89	18.40	1.1630	NEUTRAL	Reduce width to 2400px (no effect due to resize)
+19	1.0697	36.50	18.40	1.1644	KEEP	Remove sketch-pads-on-fab-layers (big win on bright_ratio)
+20	1.1373	38.57	18.40	1.1668	DISCARD	Remove exclude-drawing-sheet (much worse)
