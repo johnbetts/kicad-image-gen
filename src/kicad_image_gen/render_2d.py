@@ -12,7 +12,7 @@ from pathlib import Path
 
 from kicad_image_gen.core import find_kicad_cli
 from kicad_image_gen.ratsnest import (
-    minimum_spanning_tree,
+    nearest_neighbor_ratsnest,
     parse_board_bounds,
     parse_mounting_holes,
     parse_net_pad_map,
@@ -410,7 +410,7 @@ def _inject_overlays(
             for _net_name, pads in net_pads.items():
                 if len(pads) < 2:
                     continue
-                edges = minimum_spanning_tree(pads)
+                edges = nearest_neighbor_ratsnest(pads)
                 for i, j in edges:
                     line = ET.SubElement(ratsnest_group, f"{{{_SVG_NS}}}line")
                     line.set("x1", f"{pads[i][0]:.4f}")

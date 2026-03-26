@@ -317,6 +317,43 @@ def parse_pad_labels(pcb_path: str | Path) -> list[PadLabel]:
     return labels
 
 
+def nearest_neighbor_ratsnest(
+    points: list[tuple[float, float]],
+) -> list[tuple[int, int]]:
+    """Compute ratsnest edges matching KiCad's approach.
+
+    Each pad connects to its nearest same-net pad. This produces the same
+    line pattern as KiCad's ratsnest — direct shortest connections without
+    the crossing artifacts that MST can create.
+    """
+    n = len(points)
+    if n < 2:
+        return []
+    if n == 2:
+        return [(0, 1)]
+
+    edges: list[tuple[int, int]] = []
+    seen: set[tuple[int, int]] = set()
+    for i in range(n):
+        best_j = -1
+        best_dist = float("inf")
+        for j in range(n):
+            if i == j:
+                continue
+            dx = points[i][0] - points[j][0]
+            dy = points[i][1] - points[j][1]
+            dist = dx * dx + dy * dy
+            if dist < best_dist:
+                best_dist = dist
+                best_j = j
+        if best_j >= 0:
+            edge = (min(i, best_j), max(i, best_j))
+            if edge not in seen:
+                seen.add(edge)
+                edges.append(edge)
+    return edges
+
+
 def minimum_spanning_tree(
     points: list[tuple[float, float]],
 ) -> list[tuple[int, int]]:

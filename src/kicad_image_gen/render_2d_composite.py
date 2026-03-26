@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from kicad_image_gen.core import run_kicad_cli
 from kicad_image_gen.ratsnest import (
-    minimum_spanning_tree,
+    nearest_neighbor_ratsnest,
     parse_board_bounds,
     parse_net_pad_map,
     parse_pad_labels,
@@ -252,7 +252,7 @@ def _draw_ratsnest(
     for _net_name, pads in net_pads.items():
         if len(pads) < 2:
             continue
-        edges = minimum_spanning_tree(pads)
+        edges = nearest_neighbor_ratsnest(pads)
         for i, j in edges:
             x1, y1 = _pcb_to_pixel(
                 pads[i][0], pads[i][1], board_bounds, scale_x, scale_y, offset_x, offset_y
