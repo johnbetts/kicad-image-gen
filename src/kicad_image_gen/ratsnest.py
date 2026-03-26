@@ -52,10 +52,16 @@ _RE_NET = re.compile(r'\(net\s+(?:\d+\s+)?"([^"]*?)"\)')
 
 
 def _rotate_point(px: float, py: float, angle_deg: float) -> tuple[float, float]:
-    """Rotate point around origin (KiCad CW convention in Y-down coords)."""
+    """Rotate point around origin using KiCad's CW rotation convention.
+
+    KiCad stores positive angles as clockwise rotation in screen space
+    (Y-down coordinate system). The CW rotation matrix is:
+        x' = x*cos + y*sin
+        y' = -x*sin + y*cos
+    """
     rad = math.radians(angle_deg)
     cos_a, sin_a = math.cos(rad), math.sin(rad)
-    return px * cos_a - py * sin_a, px * sin_a + py * cos_a
+    return px * cos_a + py * sin_a, -px * sin_a + py * cos_a
 
 
 _RE_PAD_NUM = re.compile(r'\(pad\s+"([^"]*)"')
