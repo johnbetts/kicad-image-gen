@@ -37,6 +37,8 @@ def _build_parser() -> argparse.ArgumentParser:
         help=f"Layer list or preset ({', '.join(LAYER_PRESETS)})",
     )
     p2d.add_argument("-w", "--width", type=int, default=2400, help="Image width (default: 2400)")
+    p2d.add_argument("--dpi", type=int, default=None, help="Pixels per mm of board width (overrides --width)")
+    p2d.add_argument("--hires", action="store_true", help="Shortcut for --dpi 100")
     p2d.add_argument("-t", "--theme", default=None, help="KiCad color theme name")
     p2d.add_argument("-m", "--mirror", action="store_true", help="Mirror the board")
     p2d.add_argument("--bw", action="store_true", help="Black and white")
@@ -55,6 +57,17 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Disable ratsnest overlay (composite mode only)",
     )
+    p2d.add_argument(
+        "--crop",
+        default=None,
+        help="Reference designator to zoom into (e.g. U1)",
+    )
+    p2d.add_argument(
+        "--padding",
+        type=float,
+        default=5.0,
+        help="Padding in mm around crop target (default: 5.0)",
+    )
 
     # --- 3d subcommand ---
     p3d = sub.add_parser("3d", help="3D viewer-style screenshot")
@@ -65,8 +78,10 @@ def _build_parser() -> argparse.ArgumentParser:
         default="top",
         help=f"View preset ({', '.join(_VIEW_PRESETS)}) or 'custom' (default: top)",
     )
-    p3d.add_argument("-w", "--width", type=int, default=1600, help="Image width (default: 1600)")
-    p3d.add_argument("--height", type=int, default=900, help="Image height (default: 900)")
+    p3d.add_argument("-w", "--width", type=int, default=3200, help="Image width (default: 3200)")
+    p3d.add_argument("--height", type=int, default=1800, help="Image height (default: 1800)")
+    p3d.add_argument("--dpi", type=int, default=None, help="Pixels per mm of board dimension (overrides --width/--height)")
+    p3d.add_argument("--hires", action="store_true", help="Shortcut for --dpi 100")
     p3d.add_argument("-q", "--quality", default="basic", choices=["basic", "high"])
     p3d.add_argument("--perspective", action="store_true", help="Perspective projection")
     p3d.add_argument("--floor", action="store_true", help="Enable floor/shadows")
@@ -76,6 +91,18 @@ def _build_parser() -> argparse.ArgumentParser:
     p3d.add_argument("--pivot", default=None, help="Pivot point X,Y,Z cm")
     p3d.add_argument("--background", default="transparent", choices=["transparent", "opaque"])
     p3d.add_argument("--preset", default=None, help="Appearance preset name")
+    p3d.add_argument("--pad-overlay", action="store_true", help="Draw pad position overlays on 3D render")
+    p3d.add_argument(
+        "--crop",
+        default=None,
+        help="Reference designator to zoom into (e.g. U1)",
+    )
+    p3d.add_argument(
+        "--padding",
+        type=float,
+        default=5.0,
+        help="Padding in mm around crop target (default: 5.0)",
+    )
 
     # --- both subcommand ---
     pboth = sub.add_parser("both", help="Generate standard 2D + 3D image set")
@@ -99,6 +126,7 @@ def _default_output(pcb: Path, suffix: str) -> Path:
 
 def _cmd_2d(args: argparse.Namespace) -> None:
     output = args.output or _default_output(args.pcb, "2d")
+    dpi = args.dpi or (100 if args.hires else None)
     if args.composite:
         result = render_2d_composite(
             args.pcb,
@@ -114,21 +142,26 @@ def _cmd_2d(args: argparse.Namespace) -> None:
             output,
             layers=args.layers,
             width=args.width,
+            dpi=dpi,
             theme=args.theme,
             mirror=args.mirror,
             black_and_white=args.bw,
+            crop=args.crop,
+            padding_mm=args.padding,
         )
         print(f"2D: {result}")
 
 
 def _cmd_3d(args: argparse.Namespace) -> None:
     output = args.output or _default_output(args.pcb, f"3d_{args.view}")
+    dpi = args.dpi or (100 if args.hires else None)
     result = render_3d(
         args.pcb,
         output,
         view=args.view,
         width=args.width,
         height=args.height,
+        dpi=dpi,
         quality=args.quality,
         perspective=args.perspective,
         floor=args.floor,
@@ -138,6 +171,9 @@ def _cmd_3d(args: argparse.Namespace) -> None:
         pivot=args.pivot,
         background=args.background,
         preset=args.preset,
+        pad_overlay=args.pad_overlay,
+        crop=args.crop,
+        padding_mm=args.padding,
     )
     print(f"3D: {result}")
 

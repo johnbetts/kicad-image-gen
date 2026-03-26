@@ -14,10 +14,13 @@ from kicad_image_gen.core import find_kicad_cli
 from kicad_image_gen.ratsnest import (
     nearest_neighbor_ratsnest,
     parse_board_bounds,
+    parse_footprint_bounds,
+    parse_keepout_zones,
     parse_mounting_holes,
     parse_net_pad_map,
     parse_pad_labels,
     parse_tht_pads,
+    parse_vias,
 )
 
 logger = logging.getLogger(__name__)
@@ -44,6 +47,7 @@ def render_2d(
     *,
     layers: str | None = None,
     width: int = _DEFAULT_WIDTH,
+    dpi: int | None = None,
     theme: str | None = None,
     background: str | None = None,
     mirror: bool = False,
@@ -51,6 +55,8 @@ def render_2d(
     ratsnest: bool = True,
     pad_labels: bool = True,
     grid_dots: bool = False,
+    crop: str | None = None,
+    padding_mm: float = 5.0,
 ) -> Path:
     """Export a 2D editor-style PNG image of a KiCad PCB.
 
@@ -62,6 +68,8 @@ def render_2d(
         layers: Comma-separated layer list, or a preset name (top, bottom, all,
                 copper, silkscreen, fab). Defaults to all visible layers.
         width: Output image width in pixels.
+        dpi: Pixels per mm of board dimension. When set, overrides width by
+             computing it from board bounds.
         theme: KiCad color theme name.
         background: Not used for SVG export (SVG background is theme-controlled).
         mirror: Mirror the board (useful for bottom layer views).
@@ -69,6 +77,8 @@ def render_2d(
         ratsnest: Inject ratsnest lines showing signal-net connectivity (default True).
         pad_labels: Inject pad net-name labels at each pad location (default True).
         grid_dots: Inject subtle grid dot pattern in background (default True).
+        crop: Reference designator to zoom into (e.g. "U1"). None for full board.
+        padding_mm: Context padding in mm around crop target (default 5.0).
 
     Returns:
         Resolved output path.
@@ -78,6 +88,13 @@ def render_2d(
     if not pcb_path.is_file():
         msg = f"PCB file not found: {pcb_path}"
         raise FileNotFoundError(msg)
+
+    # When dpi is specified, compute width from board bounds
+    if dpi is not None:
+        bx0, _by0, bx1, _by1 = parse_board_bounds(pcb_path)
+        board_w_mm = bx1 - bx0
+        width = int(board_w_mm * dpi)
+        logger.info("DPI %d → width=%d (board %.1f mm wide)", dpi, width, board_w_mm)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -97,7 +114,15 @@ def render_2d(
         raise RuntimeError(msg)
 
     # Step 2: Inject overlays into SVG (always runs for background/grid)
-    _inject_overlays(svg_path, pcb_path, ratsnest=ratsnest, pad_labels=pad_labels, grid_dots=grid_dots)
+    _inject_overlays(
+        svg_path,
+        pcb_path,
+        ratsnest=ratsnest,
+        pad_labels=pad_labels,
+        grid_dots=grid_dots,
+        crop=crop,
+        padding_mm=padding_mm,
+    )
 
     # Step 3: Convert SVG → PNG
     try:
@@ -290,6 +315,13 @@ _NET_NAME_MIN_FONT = 0.18
 _NET_NAME_MAX_FONT = 0.60
 _NET_NAME_COLOR = "#9988aa"
 
+# Keepout zones: semi-transparent red with dashed outline
+_KEEPOUT_FILL = "#ff2222"
+_KEEPOUT_FILL_OPACITY = "0.18"
+_KEEPOUT_STROKE = "#ff4444"
+_KEEPOUT_STROKE_WIDTH = "0.25"
+_KEEPOUT_STROKE_OPACITY = "0.6"
+
 # Grid dots
 _GRID_DOT_COLOR = "#1a2a3a"
 _GRID_DOT_RADIUS = 0.04  # mm
@@ -303,8 +335,10 @@ def _inject_overlays(
     ratsnest: bool = True,
     pad_labels: bool = True,
     grid_dots: bool = True,
+    crop: str | None = None,
+    padding_mm: float = 5.0,
 ) -> None:
-    """Inject ratsnest lines and/or pad labels into the exported SVG."""
+    """Inject ratsnest lines, vias, and/or pad labels into the exported SVG."""
     ET.register_namespace("", _SVG_NS)
     try:
         tree = ET.parse(str(svg_path))
@@ -395,8 +429,47 @@ def _inject_overlays(
         modified = True
         logger.info("Injected %d mounting hole circles", len(mounting_holes))
 
+    # --- Vias (gold circles with dark drill hole) ---
+    vias = parse_vias(pcb_path)
+    if vias:
+        via_group = ET.SubElement(root, f"{{{_SVG_NS}}}g")
+        via_group.set("id", "vias")
+        for v in vias:
+            # Outer circle (copper color)
+            outer = ET.SubElement(via_group, f"{{{_SVG_NS}}}circle")
+            outer.set("cx", f"{v.x:.4f}")
+            outer.set("cy", f"{v.y:.4f}")
+            outer.set("r", f"{v.size / 2:.4f}")
+            outer.set("fill", "#b8860b")  # dark goldenrod
+            # Inner circle (drill hole)
+            inner = ET.SubElement(via_group, f"{{{_SVG_NS}}}circle")
+            inner.set("cx", f"{v.x:.4f}")
+            inner.set("cy", f"{v.y:.4f}")
+            inner.set("r", f"{v.drill / 2:.4f}")
+            inner.set("fill", _BG_COLOR)
+        modified = True
+        logger.info("Injected %d via markers into SVG", len(vias))
+
     # --- THT drill holes (disabled — theme handles via_hole color) ---
     # tht_pads = parse_tht_pads(pcb_path)
+
+    # --- Keepout zones (semi-transparent red polygons with dashed outline) ---
+    keepout_zones = parse_keepout_zones(pcb_path)
+    if keepout_zones:
+        keepout_group = ET.SubElement(root, f"{{{_SVG_NS}}}g")
+        keepout_group.set("id", "keepout-zones")
+        for zone in keepout_zones:
+            pts_str = " ".join(f"{x:.4f},{y:.4f}" for x, y in zone.points)
+            polygon = ET.SubElement(keepout_group, f"{{{_SVG_NS}}}polygon")
+            polygon.set("points", pts_str)
+            polygon.set("fill", _KEEPOUT_FILL)
+            polygon.set("fill-opacity", _KEEPOUT_FILL_OPACITY)
+            polygon.set("stroke", _KEEPOUT_STROKE)
+            polygon.set("stroke-width", _KEEPOUT_STROKE_WIDTH)
+            polygon.set("stroke-opacity", _KEEPOUT_STROKE_OPACITY)
+            polygon.set("stroke-dasharray", "0.5,0.3")
+        modified = True
+        logger.info("Injected %d keepout zone overlays into SVG", len(keepout_zones))
 
     # --- Ratsnest lines (all nets, including power) ---
     if ratsnest:
@@ -475,6 +548,20 @@ def _inject_overlays(
             if label_count > 0:
                 modified = True
                 logger.info("Injected %d pad labels into SVG", label_count)
+
+    # --- Crop viewBox to target component ---
+    if crop:
+        try:
+            cx0, cy0, cx1, cy1 = parse_footprint_bounds(pcb_path, crop)
+            crop_x = cx0 - padding_mm
+            crop_y = cy0 - padding_mm
+            crop_w = (cx1 - cx0) + 2 * padding_mm
+            crop_h = (cy1 - cy0) + 2 * padding_mm
+            root.set("viewBox", f"{crop_x:.4f} {crop_y:.4f} {crop_w:.4f} {crop_h:.4f}")
+            modified = True
+            logger.info("Cropped SVG viewBox to %s with %.1fmm padding", crop, padding_mm)
+        except ValueError:
+            logger.warning("Could not find footprint '%s' for crop — rendering full board", crop)
 
     if modified:
         tree.write(str(svg_path), xml_declaration=True, encoding="unicode")

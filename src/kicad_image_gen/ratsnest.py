@@ -323,6 +323,203 @@ def parse_pad_labels(pcb_path: str | Path) -> list[PadLabel]:
     return labels
 
 
+@dataclass(frozen=True)
+class KeepoutZone:
+    """A keepout zone polygon with absolute coordinates."""
+
+    points: tuple[tuple[float, float], ...]
+
+
+def parse_keepout_zones(pcb_path: str | Path) -> list[KeepoutZone]:
+    """Parse keepout zone polygons from a .kicad_pcb file.
+
+    Finds all ``(zone ...)`` blocks containing a ``(keepout ...)`` child and
+    extracts their polygon vertex coordinates.
+
+    Returns:
+        List of KeepoutZone objects, each with a tuple of (x, y) points.
+    """
+    text = Path(pcb_path).read_text(encoding="utf-8")
+    zones: list[KeepoutZone] = []
+
+    zone_starts = [m.start() for m in re.finditer(r"^\s+\(zone\b", text, re.MULTILINE)]
+    for start in zone_starts:
+        # Balance parentheses to find the full zone block
+        depth = 0
+        end = start
+        for i in range(start, min(start + 5000, len(text))):
+            if text[i] == "(":
+                depth += 1
+            elif text[i] == ")":
+                depth -= 1
+                if depth == 0:
+                    end = i + 1
+                    break
+        block = text[start:end]
+
+        if "(keepout" not in block:
+            continue
+
+        # Find (pts ...) using balanced-paren search (regex can't handle nested parens)
+        pts_start = block.find("(pts")
+        if pts_start < 0:
+            continue
+        pts_depth = 0
+        pts_end = pts_start
+        for pi in range(pts_start, len(block)):
+            if block[pi] == "(":
+                pts_depth += 1
+            elif block[pi] == ")":
+                pts_depth -= 1
+                if pts_depth == 0:
+                    pts_end = pi + 1
+                    break
+        pts_block = block[pts_start:pts_end]
+
+        xy_matches = re.findall(r"\(xy\s+([-\d.]+)\s+([-\d.]+)\)", pts_block)
+        if len(xy_matches) >= 3:
+            points = tuple((float(x), float(y)) for x, y in xy_matches)
+            zones.append(KeepoutZone(points=points))
+
+    return zones
+
+
+@dataclass(frozen=True)
+class ViaInfo:
+    """A via with absolute position and dimensions."""
+
+    x: float
+    y: float
+    size: float  # pad diameter in mm
+    drill: float  # drill diameter in mm
+
+
+def parse_vias(pcb_path: str | Path) -> list[ViaInfo]:
+    """Parse top-level via entries from a .kicad_pcb file.
+
+    Parses ``(via (at X Y) (size S) (drill D) ...)`` elements that appear
+    at the top level of the PCB file (not inside footprints).
+
+    Returns:
+        List of ViaInfo with absolute coordinates and dimensions.
+    """
+    text = Path(pcb_path).read_text(encoding="utf-8")
+    vias: list[ViaInfo] = []
+
+    # Match top-level (via ...) blocks — indented by one tab (top-level element)
+    for m in re.finditer(r"^\t\(via\b", text, re.MULTILINE):
+        # Extract the full block by balancing parens
+        depth = 0
+        block_end = m.start()
+        for i in range(m.start(), min(m.start() + 1000, len(text))):
+            if text[i] == "(":
+                depth += 1
+            elif text[i] == ")":
+                depth -= 1
+                if depth == 0:
+                    block_end = i + 1
+                    break
+        block = text[m.start() : block_end]
+
+        at_match = _RE_AT.search(block)
+        if not at_match:
+            continue
+
+        size_match = re.search(r"\(size\s+([-\d.]+)\)", block)
+        drill_match = re.search(r"\(drill\s+([-\d.]+)\)", block)
+        if not size_match or not drill_match:
+            continue
+
+        vias.append(
+            ViaInfo(
+                x=float(at_match.group(1)),
+                y=float(at_match.group(2)),
+                size=float(size_match.group(1)),
+                drill=float(drill_match.group(1)),
+            )
+        )
+
+    return vias
+
+
+def parse_footprint_bounds(
+    pcb_path: str | Path,
+    refdes: str,
+) -> tuple[float, float, float, float]:
+    """Parse the bounding box of a specific footprint by reference designator.
+
+    Finds the footprint block with matching Reference property, computes
+    the bounding box of all pads and graphic elements within it, and
+    returns absolute coordinates.
+
+    Args:
+        pcb_path: Path to .kicad_pcb file.
+        refdes: Reference designator (e.g. "U1", "C1").
+
+    Returns:
+        Tuple of (min_x, min_y, max_x, max_y) in mm (absolute coordinates).
+
+    Raises:
+        ValueError: If the footprint is not found.
+    """
+    for fp_x, fp_y, fp_rot, block, ref in _parse_footprint_blocks(pcb_path):
+        if ref != refdes:
+            continue
+
+        xs: list[float] = []
+        ys: list[float] = []
+
+        # Collect pad positions
+        for pm in re.finditer(r"\(pad\s", block):
+            pad_block = block[pm.start() : pm.start() + 500]
+            pad_at = _RE_AT.search(pad_block)
+            if not pad_at:
+                continue
+            pad_x = float(pad_at.group(1))
+            pad_y = float(pad_at.group(2))
+            rx, ry = _rotate_point(pad_x, pad_y, fp_rot)
+
+            # Also consider pad size for the bounding box
+            size_match = _RE_PAD_SIZE.search(pad_block)
+            pw = float(size_match.group(1)) / 2 if size_match else 0.5
+            ph = float(size_match.group(2)) / 2 if size_match else 0.5
+
+            abs_x, abs_y = fp_x + rx, fp_y + ry
+            xs.extend([abs_x - pw, abs_x + pw])
+            ys.extend([abs_y - ph, abs_y + ph])
+
+        # Collect graphic element positions (fp_line, fp_rect, fp_arc, fp_poly)
+        coord_re = re.compile(r"\((start|end|mid)\s+([-\d.]+)\s+([-\d.]+)\)")
+        for gm in re.finditer(r"\(fp_(?:line|rect|arc|poly)\b", block):
+            # Find closing paren
+            depth = 0
+            gblock_end = gm.start()
+            for i in range(gm.start(), min(gm.start() + 2000, len(block))):
+                if block[i] == "(":
+                    depth += 1
+                elif block[i] == ")":
+                    depth -= 1
+                    if depth == 0:
+                        gblock_end = i + 1
+                        break
+            gblock = block[gm.start() : gblock_end]
+            for cm in coord_re.finditer(gblock):
+                gx = float(cm.group(2))
+                gy = float(cm.group(3))
+                rx, ry = _rotate_point(gx, gy, fp_rot)
+                xs.append(fp_x + rx)
+                ys.append(fp_y + ry)
+
+        if not xs:
+            # Fallback: use footprint position as a point
+            return (fp_x - 1, fp_y - 1, fp_x + 1, fp_y + 1)
+
+        return (min(xs), min(ys), max(xs), max(ys))
+
+    msg = f"Footprint with reference '{refdes}' not found in {pcb_path}"
+    raise ValueError(msg)
+
+
 def nearest_neighbor_ratsnest(
     points: list[tuple[float, float]],
 ) -> list[tuple[int, int]]:
